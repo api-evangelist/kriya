@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments#section/Introduction/Authorization
+docs: https://docs.kriya.co/payments#section/Introduction/Authorization
+note: >-
+  Neither published OpenAPI document declares components.securitySchemes, so the
+  mechanical derive pass (0-working/derive-authentication.py) produced no profile.
+  This profile is captured from the Authorization section of the Kriya Payments API
+  documentation, which the Onboarding API explicitly reuses. Recording the spec gap
+  is deliberate: the auth model is real and documented in prose, but absent from the
+  machine-readable contract.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+schemes:
+- name: X-Kriya-ApiKey
+  type: apiKey
+  in: header
+  parameter_name: X-Kriya-ApiKey
+  description: >-
+    Partner API key issued by Kriya on approval. Must be sent with every request to
+    both the Payments API and the Onboarding API. Separate keys are issued per
+    environment (Test and Production) and must be requested separately.
+  applies_to:
+  - openapi/kriya-payments-openapi.yaml
+  - openapi/kriya-onboarding-openapi.yaml
+  declared_in_spec: false
+  source: https://docs.kriya.co/payments#section/Introduction/Authorization
+webhook_verification:
+- name: X-Kriya-Signature
+  type: hmac
+  algorithm: HMAC-SHA256
+  encoding: base64
+  direction: inbound-to-partner
+  description: >-
+    Kriya signs each outbound webhook payload with a partner-specific HMAC key and
+    sends the base64-encoded HMAC-SHA256 digest in the X-Kriya-Signature request
+    header. Partners verify by recomputing the digest over the raw payload and
+    comparing values.
+  source: https://docs.kriya.co/payments#section/Webhooks/Verifying-Webhooks
+access_model:
+  provisioning: >-
+    Access is restricted to approved partners; API keys and the webhook HMAC key are
+    issued by the Kriya team during merchant onboarding.
+  environments:
+  - name: Test
+    base_urls:
+    - https://api.kriya.dev/payments/
+    - https://api.kriya.dev/onboarding/
+  - name: Production
+    base_urls:
+    - https://api.kriya.co/payments/
+    - https://api.kriya.co/onboarding/
+  transport: All API requests must be sent over HTTPS.
+  oauth2: false
+  scopes: false
+contact: apisupport@kriya.co
