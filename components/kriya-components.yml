@@ -1,0 +1,153 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments
+docs: https://docs.kriya.co/payments
+description: >-
+  Kriya ships no JavaScript element library or web-component set. Its client-side
+  surface is two Kriya-hosted redirect web applications plus a set of installable
+  e-commerce platform plugins that render the Kriya payment option inside a
+  merchant's existing checkout.
+hosted_surfaces:
+- name: Payments Journey
+  family: hosted-checkout
+  type: hosted redirect web application
+  description: >-
+    Kriya-hosted checkout journey that collects company and user details, presents
+    available payment methods and completes the buyer's payment selection, then
+    redirects back to the merchant. Returning buyers have previous data
+    pre-populated. Co-branding is limited to displaying the merchant logo.
+  initiated_by: openapi/kriya-payments-openapi.yaml#CreateOrder
+  loader: >-
+    Server-side. CreateOrder returns paymentJourneyRedirectUrl (valid for 14 days);
+    the merchant redirects the buyer to it.
+  configuration_fields:
+  - name: PaymentAcceptedRedirectUrl
+    description: Where the buyer returns after completing the journey.
+  - name: PaymentDeclinedRedirectUrl
+    description: >-
+      Where the buyer returns if they will not or cannot proceed; the reason lands on
+      PaymentJourney.Status.
+  - name: PaymentCancelledRedirectUrl
+    description: Where the buyer returns on cancellation.
+  - name: AutoTransitionOnCompletion
+    description: >-
+      Status the order transitions to after journey completion but before redirect.
+      Defaults to leaving the order in Draft; may be set to Submitted or
+      ReadyToAdvance.
+  source: https://docs.kriya.co/payments#section/Integration-Scenarios/Payments-Journey-Integration
+- name: Onboarding Journey
+  family: hosted-onboarding
+  type: hosted redirect web application
+  description: >-
+    Kriya-hosted onboarding flow that creates limited companies, government entities
+    or sole traders, runs company credit checks and any additional checks (identity
+    verification and proof of address, sanction screening, selfie check), and
+    displays the onboarding outcome. Embedded inside the Payments Journey, so
+    partners already using Payments Journey need no extra work.
+  initiated_by: openapi/kriya-onboarding-openapi.yaml#CreateOnboardingJourney
+  loader: >-
+    Server-side. CreateOnboardingJourney returns onboardingRedirectUrl. Alternatively
+    the merchant redirects to
+    https://api.kriya.co/onboardingJourney/create with merchantIdentifier and
+    optional merchantCompanyIdentifier, onboardingCompletedUrl and
+    onboardingIneligibleUrl query parameters.
+  configuration_fields:
+  - completeUrl
+  - ineligibleUrl
+  - abandonedUrl
+  - inReviewUrl
+  note: >-
+    A given merchantCompanyIdentifier is permanently linked to a single
+    kriyaCompanyIdentifier, so a buyer always resolves to the same onboarding link.
+  source: https://docs.kriya.co/onboarding#section/Integration-Scenarios
+- name: 2FA approval page
+  family: hosted-auth
+  type: hosted redirect web application
+  description: >-
+    When a merchant requires two-factor approval for order placement, Kriya initiates
+    a 2FA session, SMSes buyer user admins a link to a Payments Journey approval
+    page, and returns a SessionStatusUrl for tracking. Sessions expire after 5
+    minutes.
+  tracked_by: openapi/kriya-payments-openapi.yaml#GetOrderMfaSession
+  source: https://docs.kriya.co/payments#section/Integration-Scenarios/Direct-API-Integration
+platform_plugins:
+- name: Kriya Payments for BigCommerce
+  platform: BigCommerce
+  url: https://www.bigcommerce.co.uk/apps/kriya-payments/
+  cost: free
+  install: BigCommerce App Marketplace
+  configuration:
+  - Merchant Id
+  - Secret Key
+  test_mode: >-
+    Installs in Test mode; specific registered user emails can be allow-listed before
+    switching the toggle to Production.
+- name: Kriya Payments for Magento (Adobe Commerce)
+  platform: Magento / Adobe Commerce
+  url: https://marketplace.magento.com/kriya-payments.html
+  cost: free
+  install: Magento Marketplace
+  compatibility:
+  - Magento CE 2.4.2 and above
+  - Magento EE / Cloud 2.4 and above
+  configuration:
+  - Enable Test Mode
+  - API Key
+  admin_path: Stores > Configuration > Sales > Payment Methods > Kriya Finance
+- name: Kriya Payments B2B BNPL extension for nopCommerce
+  platform: nopCommerce
+  url: https://www.nopcommerce.com/en/kriya-payments-b2b-bnpl-extension
+  install: Upload plugin ZIP via Configuration > Local plugins
+  compatibility:
+  - 4.4.0
+  - 4.5.0
+  - 4.6.0
+  configuration:
+  - Sandbox API key and secret
+  - Production API key and secret
+  - Use Sandbox toggle
+- name: Kriya Payments for PrestaShop
+  platform: PrestaShop
+  url: null
+  install: Upload module ZIP via Module Manager
+  configuration:
+  - Mode (TEST / LIVE / DISABLED)
+  - Sandbox API Key and Secret
+  - Production API Key and Secret
+  - Webhook Endpoint
+  - Fulfilled / Cancelled / Declined / Draft / Submitted order status mappings
+- name: Kriya Payments for Salesforce
+  platform: Salesforce (B2B Commerce)
+  url: null
+  install: Salesforce AppExchange managed package
+  onboarding: >-
+    New customers contact payments@kriya.co with B2B store URL and name to receive
+    the API key and secret; the install password is also obtained from Kriya.
+  components:
+  - name: Kriya Payment button
+    type: Lightning Web Component (LWC)
+    placement: Checkout page
+  apex_classes:
+  - name: KriyaOrderController
+    purpose: Create a new Salesforce order.
+  - name: KriyaPaymentsJourneyController
+    purpose: Create a Kriya order and get a Payments Journey URL.
+  - name: KriyaSettingsController
+    purpose: Determine whether "Pay later with Kriya" can be used.
+  note: >-
+    Apex Classes Access must be enabled on each buyer profile for the component to
+    function.
+- name: Kriya on Stripe
+  platform: Stripe
+  url: https://www.kriya.co/
+  description: >-
+    Listed on the Kriya website as a product that adds flexible payment terms to a
+    Stripe checkout. No developer documentation for it was found on docs.kriya.co
+    during this pass.
+  documented_in_api_docs: false
+web_component_library: null
+javascript_sdk: null
+note: >-
+  Kriya publishes no first-party npm/PyPI client library or embeddable JS element
+  library — see packages/kriya-packages.yml. Client-side integration is via the
+  hosted journeys or a platform plugin.

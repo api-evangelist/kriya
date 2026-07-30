@@ -1,0 +1,124 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kriya-payments-openapi.yaml, openapi/kriya-onboarding-openapi.yaml
+docs: https://docs.kriya.co/payments#section/Introduction/Response-Status-Codes
+format: custom
+rfc9457: false
+note: >-
+  Derived from the 4xx/5xx responses in both OpenAPI documents and enriched from the
+  published Response Status Codes table. The response schema is named
+  `problemDetails` but is NOT RFC 9457 / RFC 7807 — it has no `type`, `status`,
+  `detail` or `instance` members and is served as application/json, not
+  application/problem+json.
+envelope:
+  media_type: application/json
+  schema: problemDetails
+  fields:
+  - name: title
+    description: Short summary of the problem.
+  - name: message
+    description: Human-readable message describing the failure.
+  - name: errors
+    description: Collection of field-level or reason-level error entries.
+  - name: date
+    description: Timestamp of the error.
+  - name: operationId
+    description: Identifier of the operation that failed; the only correlation handle published.
+  onboarding_additional_fields:
+  - metadata
+  - reasons
+  - statusCode
+  error_item:
+    schema: problemDetailsError
+    fields:
+    - code
+    - message
+    source: openapi/kriya-onboarding-openapi.yaml
+problems:
+- status: 400
+  title: Bad Request
+  description: >-
+    The request body could not be understood by the server or contains semantic
+    errors. The response body provides details of the specific reason for the error.
+  remediation: >-
+    Inspect the `errors` collection in the response body and correct the offending
+    fields before retrying.
+  media_type: application/json
+  schema: problemDetails
+  sources:
+  - openapi/kriya-payments-openapi.yaml
+  - openapi/kriya-onboarding-openapi.yaml
+- status: 401
+  title: Unauthorized
+  description: The X-Kriya-ApiKey header was not present or is invalid.
+  remediation: >-
+    Send a valid X-Kriya-ApiKey header. Confirm the key matches the environment being
+    called — Test and Production keys are issued separately and are not
+    interchangeable.
+  media_type: application/json
+  schema: problemDetails
+  sources:
+  - openapi/kriya-payments-openapi.yaml
+  - openapi/kriya-onboarding-openapi.yaml
+- status: 404
+  title: Not Found
+  description: The requested resource could not be found.
+  remediation: >-
+    Verify the identifier in the path — merchantOrderId, paymentIdentifier or
+    kriyaCompanyIdentifier — refers to a resource that exists for this API key.
+  media_type: application/json
+  schema: problemDetails
+  sources:
+  - openapi/kriya-payments-openapi.yaml
+  - openapi/kriya-onboarding-openapi.yaml
+- status: 409
+  title: Conflict
+  description: Provided data results in a conflict.
+  remediation: >-
+    Typically an invalid state transition or a duplicate resource. Re-read current
+    state (for example with GetOrder) and confirm the transition is permitted before
+    retrying.
+  media_type: application/json
+  schema: problemDetails
+  sources:
+  - openapi/kriya-payments-openapi.yaml
+- status: 429
+  title: Too Many Requests
+  description: >-
+    The application has exceeded the rate limit — 2000 requests per 5 minutes per API
+    key across most endpoints, or 5 requests per second on the search endpoint.
+  remediation: >-
+    Back off until the rate-limit interval refreshes. Sustained breaches may cause
+    Kriya to temporarily disable API access.
+  documented_in: docs
+  spec_declared: false
+  source: https://docs.kriya.co/payments#section/Introduction/Rate-Limiting
+- status: 500
+  title: Internal Server Error
+  description: An unexpected internal error has occurred.
+  remediation: Contact apisupport@kriya.co so Kriya can investigate.
+  media_type: application/json
+  schema: problemDetails
+  sources:
+  - openapi/kriya-payments-openapi.yaml
+- status: 503
+  title: Service Unavailable
+  description: >-
+    The server is currently unavailable and cannot accept requests. Kriya informs
+    Merchants of planned downtime or outages in advance.
+  remediation: >-
+    If no prior communication was received, contact apisupport@kriya.co.
+  documented_in: docs
+  spec_declared: false
+  source: https://docs.kriya.co/payments#section/Introduction/Response-Status-Codes
+gaps:
+- >-
+  429 and 503 are documented in prose but are not declared as responses on any
+  operation in either OpenAPI document.
+- >-
+  No error code registry is published — `problemDetailsError.code` exists in the
+  Onboarding schema but its value set is not documented.
+related:
+  decline_codes: errors/kriya-decline-codes.yml
+  conventions: conventions/kriya-conventions.yml
+contact: apisupport@kriya.co

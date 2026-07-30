@@ -6,7 +6,7 @@ info:
     name: Support
     url: https://kriya.co/
     email: apisupport@kriya.co
-  version: ''
+  version: "1.0"
   x-logo:
     url: https://cdn.kriya.co/images/Kriya-Putty-Large.svg
     backgroundColor: '#00283C'

@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: searched
+source: live probe of /.well-known/* on all Kriya hosts
+result: none-found
+note: >-
+  No .well-known document is published on any Kriya host. Recorded as an audit trail
+  of the probe, not as a discovery surface — no WellKnown or SecurityTxt pointer is
+  emitted in apis.yml because nothing was found. docs.kriya.co is a Redoc
+  single-page app that returns HTTP 200 with the SPA shell for every unmatched path;
+  those 200s were verified against a known-missing baseline path and identified as
+  catch-all false positives, not real documents.
+hosts:
+- host: https://api.kriya.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://www.kriya.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://docs.kriya.co
+  spa_catch_all: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    real: false
+    detail: SPA shell, byte-identical to a known-missing baseline path
+  - path: /.well-known/openid-configuration
+    status: 200
+    real: false
+    detail: SPA shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    real: false
+    detail: SPA shell
+  - path: /.well-known/api-catalog
+    status: 200
+    real: false
+    detail: SPA shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    real: false
+    detail: SPA shell
+  - path: /llms.txt
+    status: 200
+    real: false
+    detail: SPA shell
+- host: https://api.kriya.dev
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+security_txt:
+  published: false
+  alternative: https://www.kriya.co/responsible-disclosure
+  contact: disclosure@kriya.co
+  detail: security/kriya-vulnerability-disclosure.yml

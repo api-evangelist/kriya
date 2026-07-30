@@ -1,0 +1,118 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kriya Payments API
+  version: 1.0.0
+extends: openapi/kriya-payments-openapi.yaml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Derived from the Kriya Payments documentation at https://docs.kriya.co/payments.
+  Captures enhancements API Evangelist would apply without mutating the harvested
+  original: the authentication scheme Kriya documents in prose but never declares,
+  the undeclared 429/503 responses, a real server list, and cross-links to the
+  artifacts in this repo.
+actions:
+- target: $.info
+  update:
+    version: '1.0.0'
+    contact:
+      name: Kriya API Support
+      email: apisupport@kriya.co
+      url: https://www.kriya.co/contact-us
+    x-apievangelist-artifacts:
+      authentication: authentication/kriya-authentication.yml
+      conventions: conventions/kriya-conventions.yml
+      errors: errors/kriya-problem-types.yml
+      decline_codes: errors/kriya-decline-codes.yml
+      webhooks: asyncapi/kriya-payments-webhooks.yml
+      sandbox: sandbox/kriya-sandbox.yml
+      data_model: data-model/kriya-data-model.yml
+      lifecycle: lifecycle/kriya-lifecycle.yml
+- target: $
+  description: >-
+    Declare the API key security scheme documented in the Authorization section but
+    absent from the published contract, and apply it globally.
+  update:
+    components:
+      securitySchemes:
+        KriyaApiKey:
+          type: apiKey
+          in: header
+          name: X-Kriya-ApiKey
+          description: >-
+            Partner API key issued by Kriya on approval. Required on every request.
+            Test and Production keys are issued separately and are not
+            interchangeable.
+    security:
+    - KriyaApiKey: []
+- target: $.servers
+  description: >-
+    Remove the localhost development server from the published contract and label the
+    real environments.
+  update:
+  - url: https://api.kriya.co/payments/
+    description: Production Environment
+  - url: https://api.kriya.dev/payments/
+    description: Test Environment
+- target: $.tags
+  description: Declare the tag set the operations already reference.
+  update:
+  - name: Buyers
+    description: >-
+      Register buyer companies, search company registries, retrieve pricing schemes
+      and maintain contact details.
+  - name: Orders
+    description: >-
+      Create, retrieve, amend and transition orders through the Kriya order
+      lifecycle, and upload delivery confirmation.
+  - name: Payments
+    description: Register and retrieve payment deductions against invoices.
+- target: $.info
+  description: Record the rate limits documented in prose as machine-readable extensions.
+  update:
+    x-rate-limit:
+      default: 2000 requests per 5 minutes per API key
+      overrides:
+      - operation: CompaniesSearch
+        limit: 5 requests per second
+      breach_status: 429
+      source: https://docs.kriya.co/payments#section/Introduction/Rate-Limiting
+- target: $.info
+  description: >-
+    Record the webhook surface, which the OpenAPI document does not model as
+    webhooks/callbacks.
+  update:
+    x-webhooks-summary:
+      signature_header: X-Kriya-Signature
+      algorithm: HMAC-SHA256
+      events:
+      - BuyerRiskDecisionChanged
+      - BuyerAvailableLimitChanged
+      - OrderStatusChanged
+      - SupplierRiskDecisionChanged
+      catalog: asyncapi/kriya-payments-webhooks.yml
+- target: $.paths['/orders/{merchantOrderId}'].get
+  description: Add the undeclared rate-limit response documented in the status code table.
+  update:
+    responses:
+      '429':
+        description: >-
+          The application has exceeded the rate limit. See the Rate Limiting section
+          of the documentation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/problemDetails'
+- target: $.paths['/companies/search'].post
+  description: >-
+    Record the search-specific rate limit, which is an order of magnitude tighter than
+    the API default.
+  update:
+    x-rate-limit: 5 requests per second
+    responses:
+      '429':
+        description: Search rate limit of 5 requests per second exceeded.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/problemDetails'

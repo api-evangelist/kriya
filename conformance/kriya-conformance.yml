@@ -1,0 +1,95 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kriya-payments-openapi.yaml, openapi/kriya-onboarding-openapi.yaml
+docs: https://docs.kriya.co/payments
+note: >-
+  Derived from the two published OpenAPI documents and the Kriya Payments
+  documentation. No published certification or compliance programme (SOC 2, ISO
+  27001, PCI DSS) was found on any Kriya surface, and the security-programme probe
+  found no trust center — so no Compliance or TrustCenter pointer is emitted.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    Both documents declare openapi 3.0.1 and render in Redoc at docs.kriya.co.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 security scheme in either spec and no OAuth documented. Authentication
+    is a static partner API key in the X-Kriya-ApiKey header.
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect discovery document or OIDC references found.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    The error schema is named problemDetails but omits type/status/detail/instance
+    and is served as application/json rather than application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 on api.kriya.co, www.kriya.co and
+    api.kriya.dev. A responsible-disclosure policy is published as an HTML page
+    instead.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; no deprecation policy.
+- id: rfc4648-base64
+  conforms: true
+  evidence: >-
+    Webhook signatures are base64-encoded HMAC-SHA256 digests; the documentation
+    cites RFC 4648 section 4 directly.
+- id: iso4217-currency
+  conforms: true
+  evidence: >-
+    Monetary values require a valid ISO 4217 currency code, constrained to USD, GBP
+    and EUR and matched to the buyer's country of registration.
+- id: iso3166-country
+  conforms: true
+  evidence: >-
+    Address and buyer payloads use two-letter country codes (for example GB, US).
+- id: cors-w3c
+  conforms: true
+  evidence: >-
+    Documentation states CORS is implemented in compliance with the W3C spec, with a
+    wildcard same-origin on all responses.
+- id: https-only
+  conforms: true
+  evidence: >-
+    All API requests must be sent over HTTPS; TLS 1.3 confirmed on www.kriya.co,
+    docs.kriya.co and api.kriya.co by the domain-security probe.
+- id: hmac-webhook-signing
+  conforms: true
+  evidence: >-
+    Outbound webhooks are signed with HMAC-SHA256 and delivered in the
+    X-Kriya-Signature header.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No idempotency-key contract is published; no Idempotency-Key parameter appears in
+    either spec.
+- id: json-api
+  conforms: false
+  evidence: Plain JSON request/response bodies; no JSON:API document structure.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A documented webhook surface exists (4 event types) but no AsyncAPI document is
+    published.
+- id: psd2
+  conforms: false
+  evidence: >-
+    Not an account-servicing payment service provider surface; no PSD2/open-banking
+    endpoints in either spec.
+- id: pci-dss
+  conforms: unknown
+  evidence: >-
+    No card data is handled through the published API surface (trade credit, not card
+    acquiring) and no PCI attestation is published.
+regulatory:
+  note: >-
+    Kriya Finance Limited is a UK-registered company (07330525, England and Wales).
+    No FCA authorisation detail, certification list or compliance page was found on
+    the public site during this pass; nothing is asserted here in its absence.
+compliance_program_published: false
+certifications: []

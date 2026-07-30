@@ -1,0 +1,119 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/kriya-payments-openapi.yaml, openapi/kriya-onboarding-openapi.yaml
+note: >-
+  Kriya publishes no hosted or remote MCP server. Searches of docs.kriya.co,
+  www.kriya.co and the npm registry found no first-party MCP package and no Kriya
+  GitHub organisation. This is a CANDIDATE tool list derived one-to-one from the
+  operationIds in the two published OpenAPI documents — a design starting point, not
+  a Kriya claim.
+server:
+  name: kriya
+  transport: http
+  url: null
+  published: false
+authentication:
+  type: apiKey
+  header: X-Kriya-ApiKey
+  detail: authentication/kriya-authentication.yml
+  note: >-
+    A partner API key is required. Test and Production keys differ; an MCP
+    deployment should bind one environment explicitly.
+safety_notes:
+  - >-
+    TransitionOrderStatus moves real money — ReadyToAdvance triggers Kriya to advance
+    funds to the Merchant and Supplier and cannot be reversed or cancelled. Any agent
+    exposure should require human confirmation.
+  - >-
+    The three Scenario tools exist only in the Test environment and must never be
+    wired against Production.
+  - >-
+    CompaniesSearch is rate-limited to 5 requests per second, far tighter than the
+    2000-per-5-minutes API default.
+tools:
+- name: search_companies
+  description: Search company registries to resolve a kriyaCompanyIdentifier.
+  source_operation: openapi/kriya-payments-openapi.yaml#CompaniesSearch
+  read_only: true
+- name: create_buyer
+  description: Register a new buyer company and trigger risk decisioning.
+  source_operation: openapi/kriya-payments-openapi.yaml#CreateBuyer
+  read_only: false
+- name: get_buyer
+  description: Fetch buyer company information, status and spending limits.
+  source_operation: openapi/kriya-payments-openapi.yaml#GetSingleBuyer
+  read_only: true
+- name: find_buyer_pricing_scheme
+  description: Retrieve the payment options and fees available to a buyer.
+  source_operation: openapi/kriya-payments-openapi.yaml#FindBuyerPricingScheme
+  read_only: true
+- name: update_buyer_contact_details
+  description: Modify a buyer's primary contact information.
+  source_operation: openapi/kriya-payments-openapi.yaml#UpdateBuyerContactDetails
+  read_only: false
+- name: create_order
+  description: Initiate a new order transaction, optionally returning a Payments Journey URL.
+  source_operation: openapi/kriya-payments-openapi.yaml#CreateOrder
+  read_only: false
+- name: get_order
+  description: Retrieve order details by merchant order id.
+  source_operation: openapi/kriya-payments-openapi.yaml#GetOrder
+  read_only: true
+- name: search_orders
+  description: Search orders by invoice references with page-size pagination.
+  source_operation: openapi/kriya-payments-openapi.yaml#OrdersMany
+  read_only: true
+- name: update_order
+  description: Modify order details while the order is still modifiable.
+  source_operation: openapi/kriya-payments-openapi.yaml#UpdateOrder
+  read_only: false
+- name: transition_order_status
+  description: >-
+    Transition an order to a new status. Consequential — ReadyToAdvance releases
+    funds and is irreversible.
+  source_operation: openapi/kriya-payments-openapi.yaml#TransitionOrderStatus
+  read_only: false
+  requires_confirmation: true
+- name: get_order_mfa_session
+  description: Get the current state of a two-factor approval session on an order.
+  source_operation: openapi/kriya-payments-openapi.yaml#GetOrderMfaSession
+  read_only: true
+- name: upload_delivery_confirmation
+  description: Upload delivery confirmation evidence for an order.
+  source_operation: openapi/kriya-payments-openapi.yaml#UploadDeliveryConfirmation
+  read_only: false
+- name: create_payment_deduction
+  description: Register a payment deduction against an invoice.
+  source_operation: openapi/kriya-payments-openapi.yaml#CreatePaymentDeduction
+  read_only: false
+- name: get_payment_deduction
+  description: Retrieve a single payment deduction by identifier.
+  source_operation: openapi/kriya-payments-openapi.yaml#GetPaymentDeduction
+  read_only: true
+- name: list_payment_deductions
+  description: List payment deductions.
+  source_operation: openapi/kriya-payments-openapi.yaml#ListPaymentsDeductions
+  read_only: true
+- name: create_onboarding_journey
+  description: >-
+    Create an Onboarding Journey for a company and return the onboarding redirect URL.
+  source_operation: openapi/kriya-onboarding-openapi.yaml#CreateOnboardingJourney
+  read_only: false
+- name: create_blank_onboarding_journey
+  description: Create a blank Onboarding Journey without any company details.
+  source_operation: openapi/kriya-onboarding-openapi.yaml#CreateBlankOnboardingJourney
+  read_only: false
+test_only_tools:
+- name: scenario_transition_order_status
+  description: Force an order into an otherwise internal-only status. Test environment only.
+  source_operation: openapi/kriya-payments-openapi.yaml#TransitionOrderStatusScenario
+  environment: test
+- name: scenario_buyer_risk_decision
+  description: Force a buyer decision status or spending limit. Test environment only.
+  source_operation: openapi/kriya-payments-openapi.yaml#BuyerRiskDecisionScenario
+  environment: test
+- name: scenario_update_onboarding_status
+  description: Force a company's onboarding status. Test environment only.
+  source_operation: openapi/kriya-onboarding-openapi.yaml#UpdateOnboardingStatusScenario
+  environment: test

@@ -1,0 +1,104 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments#section/Integration-Scenarios/Payments-Journey-Integration
+docs: https://docs.kriya.co/payments
+description: >-
+  Kriya is a B2B trade-credit provider rather than a card acquirer, so it publishes
+  no card decline-code table. Its equivalent surface is the set of reasons a Payments
+  Journey can decline, plus the Buyer decision statuses that gate whether a Buyer can
+  transact at all. Both are captured here. Buyer rejection reasons are explicitly
+  documented as non-exhaustive and are therefore recorded as a policy note rather
+  than enumerated.
+payment_journey_decline:
+  envelope_field: PaymentJourney.Status
+  retrieved_by: openapi/kriya-payments-openapi.yaml#GetOrder
+  masked_to_buyer: false
+  description: >-
+    When a Buyer is redirected to the PaymentDeclinedRedirectUrl, the order remains
+    in Draft and the reason is exposed on the order's PaymentJourney.Status property.
+  decline_codes:
+  - code: UserInitiated
+    meaning: >-
+      The user chose to return to the Merchant and not proceed at this time — for
+      example to add items to their basket or choose another payment method.
+    action: >-
+      The Merchant may amend the order amount (PUT on the orders endpoint) and
+      redirect the Buyer back to the Payments Journey.
+  - code: Ineligible
+    meaning: >-
+      Kriya was unable to transact with the Buyer as they have not been, or are no
+      longer, approved.
+    action: Offer the Buyer an alternative payment method.
+  - code: InsufficientFunds
+    meaning: >-
+      The Buyer's available spending limit is less than the amount of the current
+      order.
+    action: >-
+      Offer an alternative payment method, or take partial payment so Kriya can
+      transact with the funds available on the Buyer's limit.
+  - code: OnboardingChecksAreRequired
+    meaning: >-
+      The Merchant requires additional onboarding checks and none of the Buyer's
+      directors have completed them.
+    action: >-
+      Route the director through the Onboarding Journey, then resume the order flow.
+  - code: OnboardingChecksAreFailed
+    meaning: >-
+      A director attempted the Merchant's required additional onboarding checks and
+      failed them.
+    action: >-
+      The Buyer cannot proceed on trade credit; offer an alternative payment method.
+  - code: InsufficientFundsOnboardingChecksAreRequired
+    meaning: >-
+      Both conditions apply — the available spending limit is below the order amount
+      and required additional onboarding checks are outstanding.
+    action: >-
+      Resolve the onboarding checks and reduce the order amount, or offer an
+      alternative payment method.
+buyer_decision_status:
+  envelope_field: status
+  retrieved_by: openapi/kriya-payments-openapi.yaml#GetSingleBuyer
+  also_delivered_by: asyncapi/kriya-payments-webhooks.yml#BuyerRiskDecisionChanged
+  statuses:
+  - code: Submitted
+    meaning: >-
+      The Buyer is registered but no risk decision has been made; automatic risk
+      decisioning has been triggered.
+    action: Wait for the BuyerRiskDecisionChanged webhook or poll GetSingleBuyer.
+  - code: InReview
+    meaning: >-
+      The Buyer is under manual review by the Kriya risk team; further information is
+      needed. The company may be contacted directly.
+    action: Do not submit orders; await the decision.
+  - code: Approved
+    meaning: The Buyer is approved and has a spending limit greater than zero.
+    action: Orders may be submitted up to the available spending limit.
+  - code: OnHold
+    meaning: >-
+      The Buyer is on hold. New orders cannot be placed until the Buyer is Approved,
+      but existing orders may still be amended and transitioned.
+    action: Block new order creation; existing orders continue.
+  - code: Rejected
+    meaning: >-
+      The Buyer is rejected and cannot transact with Kriya. A previously approved
+      Buyer's spending limit becomes zero. One or more rejection reasons are returned.
+    action: Offer an alternative payment method.
+rejection_reasons:
+  field: rejectionReasons
+  type: array of strings
+  exhaustive: false
+  masked_to_buyer: true
+  policy: >-
+    Kriya states the list of rejection reasons is subject to change and does not
+    publish an exhaustive set. Reasons are explicitly for the Merchant's information
+    only and must not be displayed to the Buyer, and must not be treated as string
+    identifiers that programmatically influence system behaviour.
+  observed_examples:
+  - UNSUPPORTED INDUSTRY
+  - AGE OF DIRECTOR
+  example_source: >-
+    BuyerRiskDecisionChanged webhook example payload in the published documentation.
+  escalation: Contact the Kriya account manager to interpret a specific reason.
+related:
+  problem_types: errors/kriya-problem-types.yml
+  webhooks: asyncapi/kriya-payments-webhooks.yml

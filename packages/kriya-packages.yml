@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: searched
+source: npm registry search, PyPI, docs.kriya.co, www.kriya.co
+result: none-found
+note: >-
+  Kriya publishes no first-party client library in any public package registry. No
+  SDKs or Packages pointer is emitted in apis.yml as a result. Integration is by
+  direct HTTPS calls, by one of the hosted journeys, or by an e-commerce platform
+  plugin — see components/kriya-components.yml.
+packages: []
+registries_probed:
+- registry: npm
+  query: kriya
+  result: >-
+    20 matches, none first-party. Results belong to an unrelated Kriya DeFi protocol
+    (kriya-dex-sdk, kriya-v3-sdk, kriya-clmm-sdk, kriya-vault-sdk, kriya-farms-sdk),
+    a Kriya desktop-agent toolkit (kriya-core, kriya-sidecar, create-kriya-app,
+    kriya-inspector), a Vedic astrology library (kriya-astrology,
+    kriya-ephemeris*), and a react/redux component library (kriya).
+  official_found: false
+- registry: pypi
+  query: kriya
+  result: >-
+    Package `kriya` exists but is unrelated — "Build AI-ready Semantic Apps for
+    Agents and Users" by Tridib Roy Arjo.
+  official_found: false
+- registry: maven-central
+  result: not-probed
+- registry: nuget
+  result: not-probed
+- registry: pkg.go.dev
+  result: not-probed
+- registry: rubygems
+  result: not-probed
+- registry: packagist
+  result: not-probed
+- registry: crates.io
+  result: not-probed
+github_organization:
+  found: false
+  note: >-
+    No Kriya Finance GitHub organisation was found. github.com/kriya resolves to an
+    unrelated account (kriyaconnect); github.com/kriyafinance returns 404. No
+    GitHubOrganization pointer is emitted.
+distributed_artifacts:
+  note: >-
+    Kriya does distribute installable integrations, but through e-commerce
+    marketplaces rather than developer package registries.
+  items:
+  - name: Kriya Payments for BigCommerce
+    channel: BigCommerce App Marketplace
+    url: https://www.bigcommerce.co.uk/apps/kriya-payments/
+  - name: Kriya Payments for Magento
+    channel: Magento Marketplace
+    url: https://marketplace.magento.com/kriya-payments.html
+  - name: Kriya Payments B2B BNPL extension
+    channel: nopCommerce Marketplace
+    url: https://www.nopcommerce.com/en/kriya-payments-b2b-bnpl-extension
+  - name: Kriya Payments for Salesforce
+    channel: Salesforce AppExchange
+    url: null
+  detail: components/kriya-components.yml
+cli:
+  found: false
+  note: No first-party CLI is published; no CLI pointer is emitted.

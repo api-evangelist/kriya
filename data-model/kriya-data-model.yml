@@ -1,0 +1,296 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kriya-payments-openapi.yaml, openapi/kriya-onboarding-openapi.yaml
+docs: https://docs.kriya.co/payments#section/Definitions
+description: >-
+  Entity-relationship graph derived from the $ref links and id-reference fields in
+  the two published OpenAPI documents, with entity definitions taken from the
+  Definitions section of the Kriya Payments documentation.
+identifiers:
+- name: kriyaCompanyIdentifier
+  type: uuid
+  issued_by: Kriya
+  description: >-
+    Canonical Kriya identifier for a company (buyer or supplier). Returned by
+    CompaniesSearch and required to obtain instant decisioning.
+- name: merchantCompanyIdentifier
+  type: string
+  issued_by: Merchant
+  description: >-
+    Merchant-side company identifier. Permanently linked to exactly one
+    kriyaCompanyIdentifier once the association is established.
+- name: companyIdentifier
+  type: string
+  issued_by: national registry
+  description: >-
+    National company identifier, for example a UK Company Registration Number. For
+    the US and Canada there is no nationwide registry, so name+address or URL/email
+    search must be used instead.
+- name: merchantOrderId
+  type: string
+  issued_by: Merchant
+  description: Merchant-side order identifier; the path parameter for all order operations.
+- name: paymentIdentifier
+  type: string
+  issued_by: Kriya
+  description: Identifier for a payment deduction.
+- name: paymentReference
+  type: string
+  issued_by: Kriya
+  description: Kriya payment reference on an order, for example MPXXXXX.
+entities:
+- name: Merchant
+  description: >-
+    The partner integrating with the Kriya Payments API — typically an online
+    platform selling goods or services to Buyers, directly or via Suppliers.
+  schema: null
+  note: >-
+    Not modelled as a schema; the Merchant is the API key holder and is implicit in
+    every request.
+- name: Buyer
+  description: >-
+    A business purchasing from the Merchant. Must be registered with Kriya and hold
+    an approved spending limit before transacting.
+  schemas:
+  - buyerDetails
+  - buyerCompanyDetails
+  - createBuyerRequest
+  - createBuyerResponse
+  - getBuyerResponse
+  key_fields:
+  - kriyaCompanyIdentifier
+  - merchantCompanyIdentifier
+  - companyIdentifier
+  - status
+  - totalLimit
+  - availableLimit
+  - usedLimit
+  - rejectionReasons
+  states: errors/kriya-decline-codes.yml#buyer_decision_status
+- name: Supplier
+  description: >-
+    A business providing the goods or services sold via the Merchant. Must be
+    registered and approved. May also be a Buyer on the same or another Merchant.
+  schemas:
+  - supplierCompanyDetails
+  key_fields:
+  - kriyaCompanyIdentifier
+  - merchantCompanyIdentifier
+  - companyIdentifier
+- name: Order
+  description: >-
+    An agreement between Buyer, Supplier and Merchant to purchase goods or services,
+    payable via a Kriya BNPL payment method.
+  schemas:
+  - baseOrder
+  - createOrderRequest
+  - createOrderResponse
+  - getOrderResponse
+  - updateOrderRequest
+  - updateOrderResponse
+  - getManyOrdersResponse
+  key_fields:
+  - merchantOrderId
+  - status
+  - paymentReference
+  - invoiceReference
+  - orderPlacedDate
+  - deliveryDate
+  states:
+  - Draft
+  - AwaitingPrepayment
+  - Submitted
+  - ReadyToAdvance
+  - Advanced
+  - Overdue
+  - Repaid
+  - Closed
+  - Cancelled
+  state_source: https://docs.kriya.co/payments#section/Definitions/Order-Status
+- name: Payment
+  description: Payment terms and amounts attached to an order.
+  schemas:
+  - orderPaymentInfo
+  - paymentData
+  - paymentOptions
+  - monetaryValue
+  - repaymentData
+  - repaymentMonetaryValue
+- name: PaymentMethod
+  description: >-
+    A specific term under which an order is paid, for example "Pay in 30 days" or
+    "Pay in 3 instalments", each with an associated fee percentage.
+  schemas:
+  - buyerPricingScheme
+  - paymentOptions
+  key_fields:
+  - identifier
+  - name
+  - feePercentage
+  - isEnabled
+  - isPayNowEnabled
+- name: PaymentDeduction
+  description: A deduction registered against an invoice.
+  schemas:
+  - createPaymentDeductionRequest
+  - createPaymentDeductionResponse
+  - paymentDeductionResponse
+  - paymentDeductionBuyer
+  key_fields:
+  - paymentIdentifier
+  - invoiceReferenceNumber
+  - uniqueKey
+  - status
+- name: PaymentJourney
+  description: Hosted checkout journey attached to an order.
+  schemas:
+  - paymentJourney
+  key_fields:
+  - paymentAcceptedRedirectUrl
+  - paymentDeclinedRedirectUrl
+  - paymentCancelledRedirectUrl
+  - declineStatus
+  - autoTransitionOnCompletion
+- name: MfaSession
+  description: >-
+    Two-factor approval session gating order submission, expiring after 5 minutes.
+  schemas:
+  - getOrderMfaSessionResponse
+  - mfaRecipient
+  - mfaRecipientDestination
+  key_fields:
+  - id
+  - state
+  - recipients
+- name: User
+  description: >-
+    An employee of the Buyer placing orders. A buyer user admin may additionally
+    approve orders and manage buyer users.
+  schemas:
+  - user
+  - buyerContactDetails
+  key_fields:
+  - email
+  - fullName
+  - role
+  - phoneNumber
+- name: Director
+  description: >-
+    A registered director of a limited company Buyer, who must complete additional
+    onboarding checks where the Merchant requires them.
+  schemas:
+  - directorDetails
+  key_fields:
+  - fullName
+  - dateOfBirth
+  - residentialAddress
+- name: OnboardingJourney
+  description: >-
+    Hosted onboarding flow running company checks and any additional checks for a
+    Buyer company.
+  schemas:
+  - createOnboardingJourneyRequest
+  - createOnboardingJourneyResponse
+  - onboardingJourney
+  source_spec: openapi/kriya-onboarding-openapi.yaml
+  key_fields:
+  - merchantCompanyIdentifier
+  - kriyaCompanyIdentifier
+  - nationalId
+  - companyType
+  - onboardingRedirectUrl
+- name: Address
+  description: Postal address, reused across companies, deliveries and directors.
+  schemas:
+  - address
+relationships:
+- from: Order
+  to: Buyer
+  type: belongs_to
+  via: buyerCompany
+  evidence: baseOrder.buyerCompany $ref buyerCompanyDetails
+- from: Order
+  to: Supplier
+  type: belongs_to
+  via: supplierCompany
+  evidence: baseOrder.supplierCompany $ref supplierCompanyDetails
+- from: Order
+  to: User
+  type: belongs_to
+  via: user
+  evidence: baseOrder.user $ref user
+- from: Order
+  to: Payment
+  type: has_one
+  via: payment
+  evidence: baseOrder.payment $ref orderPaymentInfo
+- from: Order
+  to: Address
+  type: has_many
+  via: deliveryAddresses
+  evidence: baseOrder.deliveryAddresses array of address
+- from: Order
+  to: PaymentJourney
+  type: has_one
+  via: paymentJourney
+  evidence: getOrderResponse.paymentJourney $ref paymentJourney
+- from: Order
+  to: MfaSession
+  type: has_one
+  via: sessionId
+  evidence: GET /orders/{merchantOrderId}/session/{sessionId}
+- from: Payment
+  to: PaymentMethod
+  type: has_one
+  via: paymentMethod
+  evidence: orderPaymentInfo.paymentMethod
+- from: Payment
+  to: MonetaryValue
+  type: has_many
+  via: supplier, merchant, prepayment
+  evidence: orderPaymentInfo supplier/merchant/prepayment amounts
+- from: Buyer
+  to: Director
+  type: has_one
+  via: director
+  evidence: buyerDetails.director $ref directorDetails
+- from: Buyer
+  to: User
+  type: has_many
+  via: contactDetails
+  evidence: createBuyerRequest.contactDetails $ref buyerContactDetails
+- from: Buyer
+  to: PaymentMethod
+  type: has_many
+  via: pricing scheme
+  evidence: FindBuyerPricingScheme returns buyerPricingScheme per buyer
+- from: Buyer
+  to: OnboardingJourney
+  type: has_many
+  via: merchantCompanyIdentifier
+  evidence: >-
+    createOnboardingJourneyRequest keyed on merchantCompanyIdentifier /
+    kriyaCompanyIdentifier
+- from: PaymentDeduction
+  to: Buyer
+  type: belongs_to
+  via: buyer
+  evidence: createPaymentDeductionResponse.buyer $ref paymentDeductionBuyer
+- from: PaymentDeduction
+  to: Order
+  type: belongs_to
+  via: invoiceReferenceNumber
+  evidence: >-
+    Deductions are registered against an invoice reference that also appears on the
+    order.
+- from: MfaSession
+  to: User
+  type: has_many
+  via: recipients
+  evidence: getOrderMfaSessionResponse.recipients array of mfaRecipient
+- from: Director
+  to: Address
+  type: has_one
+  via: residentialAddress
+  evidence: directorDetails.residentialAddress $ref address
+render: null

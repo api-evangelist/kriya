@@ -1,0 +1,70 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments
+note: >-
+  Kriya publishes comparatively little lifecycle policy. The absences recorded below
+  are probe/search results, not omissions — no status page, changelog, deprecation
+  policy or SLA was found on any Kriya surface. No StatusPage or Deprecation pointer
+  is emitted in apis.yml as a result.
+versioning:
+  scheme: none-published
+  current: null
+  in_url: false
+  in_header: false
+  detail: >-
+    Neither base URL carries a version segment (https://api.kriya.co/payments/,
+    https://api.kriya.co/onboarding/) and neither OpenAPI document sets info.version.
+    Products are separated by path, not version. No versioning or API-evolution
+    policy is documented.
+  docs: null
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+deprecated_operations: []
+status_page:
+  url: null
+  found: false
+  probed:
+  - url: https://status.kriya.co
+    result: DNS does not resolve
+  - url: https://www.kriya.co/status
+    result: 404
+  - url: https://kriya.statuspage.io
+    result: >-
+      302 redirect to https://www.statuspage.io/ — an unclaimed Statuspage subdomain,
+      not a Kriya status page.
+  outage_communication: >-
+    In place of a status page, the documentation states that Kriya will inform
+    Merchants of any planned downtime or outages directly, and directs partners who
+    receive an unannounced 503 to contact apisupport@kriya.co.
+changelog:
+  url: null
+  found: false
+  detail: >-
+    No dated changelog or release-notes page was found on docs.kriya.co or
+    www.kriya.co. The docs portal is a Redoc single-page app with routes for
+    /payments, /onboarding and /marketpay only.
+sla:
+  url: null
+  published: false
+  performance_note: >-
+    The Test environment is documented as potentially taking 1-15 seconds per request
+    due to cold starts; Production is stated not to exhibit this.
+support:
+  api_support: apisupport@kriya.co
+  sales: payments@kriya.co
+  security: disclosure@kriya.co
+  contact_page: https://www.kriya.co/contact-us
+corporate:
+  legal_entity: Kriya Finance Limited
+  registered_number: '07330525'
+  jurisdiction: England and Wales
+  registered_address: 4-5th Floor, 15 Worship Street, London, EC2A 2DT, United Kingdom
+  source: https://www.kriya.co/responsible-disclosure
+  acquisition:
+    acquirer: Allica Bank
+    date: '2025-10'
+    source: https://www.kriya.co/

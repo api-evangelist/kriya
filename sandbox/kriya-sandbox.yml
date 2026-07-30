@@ -1,0 +1,100 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments#section/API-Environments
+docs: https://docs.kriya.co/payments#section/API-Environments
+description: >-
+  Kriya runs a dedicated Test environment alongside Production, with separately
+  issued API keys and a set of Test-only scenario simulator endpoints that let
+  partners force otherwise non-deterministic or internal-only state transitions.
+environments:
+- name: Test
+  base_urls:
+  - https://api.kriya.dev/payments/
+  - https://api.kriya.dev/onboarding/
+  description: >-
+    Created to allow partners to test their integrations. Also supports overriding
+    certain internal operations via the scenario simulators below.
+  caveat: >-
+    Requests may occasionally take between 1 and 15 seconds because of cold starts in
+    the test environment technology. This does not occur in Production.
+- name: Production
+  base_urls:
+  - https://api.kriya.co/payments/
+  - https://api.kriya.co/onboarding/
+credentials:
+  separate_keys_per_environment: true
+  provisioning: >-
+    Access to each environment must be requested separately; Kriya issues distinct
+    API keys per environment. Test and Production HMAC webhook keys are also
+    configured separately.
+  key_header: X-Kriya-ApiKey
+  test_values_published: false
+  note: >-
+    Kriya publishes no shared/public sandbox key, test card numbers or magic
+    identifiers — partner-specific credentials are issued on approval. Test data is
+    driven by the scenario simulator endpoints instead of by magic values.
+scenario_simulators:
+  available_in:
+  - Test
+  description: >-
+    Test-environment-only endpoints that simulate states a partner could not
+    otherwise reach through the production API surface.
+  simulators:
+  - name: Buyer risk decision
+    path: /api/scenario/Buyers/risk-decision
+    operation: openapi/kriya-payments-openapi.yaml#BuyerRiskDecisionScenario
+    purpose: >-
+      Transition a Buyer to a specific decision status or set a spending limit.
+      Without this, newly registered Buyers in Test resolve non-deterministically via
+      automated risk decisioning.
+    settable:
+    - status
+    - limit
+  - name: Supplier risk decision
+    path: /api/scenario/Suppliers/risk-decision
+    operation: null
+    purpose: >-
+      Transition a Supplier to a specific decision status. Documented in the API
+      Environments section but not present as an operation in the published OpenAPI.
+  - name: Order status transition
+    path: /api/scenario/orders/{merchantOrderId}/transition
+    operation: openapi/kriya-payments-openapi.yaml#TransitionOrderStatusScenario
+    purpose: >-
+      Transition an order into statuses that are otherwise set only internally by
+      Kriya, for example Advanced, Overdue or Repaid.
+    constraint: >-
+      The transition must still be valid — for example an order cannot move from
+      ReadyToAdvance directly to Repaid without passing through Advanced.
+  - name: Onboarding status
+    path: /scenario/onboardingStatus
+    operation: openapi/kriya-onboarding-openapi.yaml#UpdateOnboardingStatusScenario
+    purpose: >-
+      Update a company's onboarding status for testing purposes. Available in the
+      Test environment only.
+plugin_test_modes:
+  description: >-
+    Kriya's e-commerce plugins each expose a test/sandbox toggle backed by the same
+    Test environment.
+  plugins:
+  - name: BigCommerce
+    mode: >-
+      Installs in Test mode by default; specific registered user email addresses can
+      be allow-listed to see the payment option before switching the toggle to
+      Production.
+  - name: Magento (Adobe Commerce)
+    mode: Enable Test Mode = Yes, with a separate API key per mode.
+  - name: nopCommerce
+    mode: Separate Sandbox and Production API keys and secrets, with a Use Sandbox option.
+  - name: PrestaShop
+    mode: >-
+      Mode setting of TEST (sandbox API keys), LIVE (production API keys) or DISABLED.
+  detail: components/kriya-components.yml
+sample_code:
+  - name: Company search (test environment)
+    language: javascript
+    source: https://docs.kriya.co/payments#section/Integration-Scenarios
+    endpoint: https://api.kriya.dev/payments/companies/search
+    note: >-
+      Published verbatim in the docs as a runnable snippet; the API key is a
+      placeholder the partner substitutes.
+contact: apisupport@kriya.co

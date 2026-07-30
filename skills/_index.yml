@@ -1,0 +1,61 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  Generated from the two published Kriya OpenAPI documents and the Kriya Payments and
+  Onboarding documentation. Every operationId referenced below was verified verbatim
+  against the specs in openapi/. Kriya publishes no AGENTS.md or first-party agent
+  skills.
+skills:
+- file: kriya-onboard-buyer-and-place-order.md
+  name: Onboard a Kriya buyer and place a B2B PayLater order
+  description: >-
+    Direct API integration — company search, buyer registration, risk decisioning,
+    pricing, order creation and the transition to Submitted and ReadyToAdvance.
+  api: openapi/kriya-payments-openapi.yaml
+  operations:
+  - CompaniesSearch
+  - CreateBuyer
+  - GetSingleBuyer
+  - FindBuyerPricingScheme
+  - CreateOrder
+  - TransitionOrderStatus
+- file: kriya-hosted-payments-journey.md
+  name: Take payment through the Kriya hosted Payments Journey
+  description: >-
+    Low-effort integration — create an order with journey redirect URLs, redirect the
+    buyer, reconcile the decline status and submit the order.
+  api: openapi/kriya-payments-openapi.yaml
+  operations:
+  - CreateOrder
+  - GetOrder
+  - UpdateOrder
+  - TransitionOrderStatus
+- file: kriya-run-onboarding-checks.md
+  name: Run Kriya onboarding and KYC checks on a buyer company
+  description: >-
+    Create an Onboarding Journey for a limited company, government entity or sole
+    trader, run company and additional checks, and track onboarding status.
+  api: openapi/kriya-onboarding-openapi.yaml
+  operations:
+  - CreateOnboardingJourney
+  - CreateBlankOnboardingJourney
+  - UpdateOnboardingStatusScenario
+safety_notes:
+- >-
+  TransitionOrderStatus to ReadyToAdvance advances real funds, cannot be cancelled,
+  and blocks all further order updates. Require human confirmation.
+- >-
+  Operations under /scenario/ are Test-environment only and must never be invoked
+  against Production.
+- >-
+  No idempotency contract exists. Do not blind-retry writes; re-read state first.
+- >-
+  Buyer rejectionReasons are for the merchant only and must never be shown to the
+  buyer.
+related:
+  conventions: conventions/kriya-conventions.yml
+  errors: errors/kriya-problem-types.yml
+  decline_codes: errors/kriya-decline-codes.yml
+  authentication: authentication/kriya-authentication.yml
+  webhooks: asyncapi/kriya-payments-webhooks.yml
+  sandbox: sandbox/kriya-sandbox.yml

@@ -1,0 +1,167 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments#section/Webhooks
+type: Webhooks
+spec_type: none
+note: >-
+  Kriya publishes no AsyncAPI document. It does publish a complete, documented
+  webhook surface — four event types with example payloads, HMAC signature
+  verification, and a retry policy — captured here verbatim from the Webhooks
+  section of the Payments API documentation.
+transport:
+  protocol: https
+  method: POST
+  delivery: >-
+    All supported event types are delivered to a single partner-supplied webhook URL.
+  configuration: >-
+    A single receiving URL is configured by the Kriya team on request via
+    apisupport@kriya.co, separately for the test and production environments.
+envelope:
+  fields:
+  - name: type
+    type: string
+    description: The defined Type of the event that triggered the webhook.
+  - name: timestamp
+    type: datetime
+    description: The date and time that the event occurred.
+  - name: message
+    type: object
+    description: The object that relates specifically to the Type of event being sent.
+  example:
+    type: OrderStatusChanged
+    message:
+      merchantOrderId: '0001'
+      paymentReference: MPXXXXX
+      invoiceReference: INV-001
+      oldStatus: Draft
+      newStatus: Submitted
+      buyerCurrentBalance: 1500000
+      totalAmount:
+        amount: 100
+        currency: GBP
+    timestamp: '2022-03-28T15:09:21.5369596+00:00'
+security:
+  signature_header: X-Kriya-Signature
+  algorithm: HMAC-SHA256
+  encoding: base64
+  key: Partner-specific HMAC key issued by the Kriya team.
+  verification: >-
+    Recompute an HMAC-SHA256 digest over the received payload using the partner HMAC
+    key, base64-encode it, and compare with the X-Kriya-Signature header value.
+  source: https://docs.kriya.co/payments#section/Webhooks/Verifying-Webhooks
+delivery_policy:
+  acknowledgement: Receiver must return a 2XX response.
+  retries: 3
+  backoff: exponential, 2s / 4s / 8s
+  on_exhaustion: >-
+    Kriya contacts the partner and decides whether the webhooks should be replayed.
+  guaranteed: false
+  guidance:
+  - >-
+    Delivery is not guaranteed; partners should reconcile by periodically fetching
+    data from the API.
+  - >-
+    Requests may be delayed; inspect the Timestamp to detect stale events and ignore
+    superseded ones or re-fetch current state from the API.
+  source: https://docs.kriya.co/payments#section/Webhooks/Limitations-and-Best-Practices
+events:
+- name: BuyerRiskDecisionChanged
+  entity: Buyer
+  description: >-
+    The Kriya risk decision has changed for a Buyer — an approved Buyer's spending
+    limit was increased or decreased, or the Buyer status transitioned, as a result
+    of automated risk decisioning or an onboarding status change.
+  payload_fields:
+  - kriyaCompanyIdentifier
+  - merchantCompanyIdentifier
+  - companyIdentifier
+  - countryCode
+  - companyType
+  - limit
+  - status
+  - currentBalance
+  - usedLimit
+  - rejectionReasons
+  - onboardingStatus
+  example:
+    kriyaCompanyIdentifier: 7527900F-0D74-4928-805A-C29ABA59D771
+    merchantCompanyIdentifier: GB12345678
+    companyIdentifier: '12345678'
+    countryCode: GB
+    companyType: limitedcompany
+    limit: 15000000
+    status: Approved
+    currentBalance: 14100000
+    usedLimit: 900000
+    rejectionReasons:
+    - UNSUPPORTED INDUSTRY
+    - AGE OF DIRECTOR
+    onboardingStatus: Passed
+- name: BuyerAvailableLimitChanged
+  entity: Buyer
+  description: >-
+    An event altered the Buyer's available spending limit — an order transitioned
+    status, an order value changed, the Buyer transacted with another Merchant, or
+    the risk team altered the Buyer's limit directly.
+  payload_fields:
+  - kriyaCompanyIdentifier
+  - merchantCompanyIdentifier
+  - companyIdentifier
+  - countryCode
+  - companyType
+  - limit
+  - currentBalance
+  - currencyCode
+  - usedLimit
+  example:
+    kriyaCompanyIdentifier: 7527900F-0D74-4928-805A-C29ABA59D771
+    merchantCompanyIdentifier: GB12345678
+    companyIdentifier: '12345678'
+    countryCode: GB
+    companyType: limitedcompany
+    limit: 15000000
+    currentBalance: 14100000
+    currencyCode: GBP
+    usedLimit: 900000
+- name: OrderStatusChanged
+  entity: Order
+  description: >-
+    An order transitioned to a different status. Useful for tracking operational
+    activity beyond checkout, for example an order moving from Advanced to Repaid.
+    The message also carries the Buyer's available spending limit.
+  payload_fields:
+  - merchantOrderId
+  - paymentReference
+  - invoiceReference
+  - oldStatus
+  - newStatus
+  - buyerCurrentBalance
+  - totalAmount
+  example:
+    merchantOrderId: '0001'
+    paymentReference: MPXXXXX
+    invoiceReference: INV-001
+    oldStatus: Draft
+    newStatus: Submitted
+    buyerCurrentBalance: 1500000
+    totalAmount:
+      amount: 100
+      currency: GBP
+- name: SupplierRiskDecisionChanged
+  entity: Supplier
+  description: >-
+    The Kriya risk decision changed for a Supplier, when the Kriya risk team
+    transitions a Supplier's status. There is no automated decisioning for Suppliers.
+  payload_fields:
+  - kriyaCompanyIdentifier
+  - merchantCompanyIdentifier
+  - companyIdentifier
+  - countryCode
+  - status
+  example:
+    kriyaCompanyIdentifier: 7527900F-0D74-4928-805A-C29ABA59D771
+    merchantCompanyIdentifier: GB12345678
+    companyIdentifier: '12345678'
+    countryCode: GB
+    status: Approved
+contact: apisupport@kriya.co

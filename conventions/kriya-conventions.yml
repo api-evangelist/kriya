@@ -1,0 +1,125 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kriya.co/payments#section/Introduction
+docs: https://docs.kriya.co/payments
+description: >-
+  Cross-cutting request/response semantics for the Kriya Payments and Onboarding
+  APIs, captured from the published documentation and corroborated against the two
+  OpenAPI documents in openapi/.
+authentication:
+  style: api-key-header
+  header: X-Kriya-ApiKey
+  transport: https-only
+  detail: authentication/kriya-authentication.yml
+content:
+  request_format: application/json
+  response_format: application/json
+  note: Requests and responses must use JSON.
+cors:
+  supported: true
+  policy: >-
+    CORS is implemented per the W3C spec; all responses carry a wildcard same-origin
+    header, permitting cross-domain calls from the browser.
+  source: https://docs.kriya.co/payments#section/Introduction/Cross-Origin-Resource-Sharing
+idempotency:
+  supported: false
+  note: >-
+    Kriya publishes no idempotency-key contract. Neither OpenAPI document declares an
+    Idempotency-Key header or equivalent parameter, and the documentation does not
+    describe safe request replay. The nearest construct is the createPaymentDeduction
+    request body field `uniqueKey`, which de-duplicates payment deductions only and
+    is not a general-purpose idempotency mechanism. No Idempotency pointer is emitted
+    in apis.yml as a result.
+  partial_mechanism:
+    field: uniqueKey
+    scope: CreatePaymentDeduction request body only
+    source: openapi/kriya-payments-openapi.yaml#CreatePaymentDeduction
+pagination:
+  style: page-size-only
+  note: >-
+    Only the OrdersMany search operation paginates. The request accepts `pageSize`
+    and the response returns `totalCount` and `pageSize`. No cursor, offset or
+    next-page token is published.
+  request_params:
+  - pageSize
+  response_fields:
+  - orders
+  - totalCount
+  - pageSize
+  source: openapi/kriya-payments-openapi.yaml#OrdersMany
+rate_limiting:
+  documented: true
+  default_limit: 2000 requests per 5 minutes per API key
+  endpoint_overrides:
+  - endpoint: Company search
+    limit: 5 requests per second
+    source_operation: openapi/kriya-payments-openapi.yaml#CompaniesSearch
+  breach_status: 429
+  breach_behaviour: >-
+    The API responds with 429 Too Many Requests until the interval refreshes.
+    Persistent breaches may result in Kriya temporarily disabling API access.
+  headers_published: false
+  source: https://docs.kriya.co/payments#section/Introduction/Rate-Limiting
+error_envelope:
+  format: custom
+  rfc9457: false
+  media_type: application/json
+  schema: problemDetails
+  fields:
+  - title
+  - message
+  - errors
+  - date
+  - operationId
+  note: >-
+    The envelope is named `problemDetails` but does not conform to RFC 9457 / RFC
+    7807 — it carries no `type`, `status`, `detail` or `instance` members and is not
+    served as application/problem+json. The Onboarding API variant adds `metadata`,
+    `reasons` and `statusCode`.
+  detail: errors/kriya-problem-types.yml
+tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is documented. The error envelope carries an
+    `operationId` field that identifies the failing operation, which is the only
+    published correlation handle.
+versioning:
+  scheme: none-published
+  note: >-
+    No version segment appears in either base URL and no version header is
+    documented. Products are separated by URL path (/payments/, /onboarding/) rather
+    than by version.
+  detail: lifecycle/kriya-lifecycle.yml
+monetary_values:
+  structure: amount + currency
+  amount_type: int64 minor units
+  currencies:
+  - USD
+  - GBP
+  - EUR
+  constraint: >-
+    Currency must be a valid ISO 4217 code and must match the buyer's country of
+    registration.
+  source: https://docs.kriya.co/payments#section/Definitions/Monetary-data
+identifiers:
+  - name: kriyaCompanyIdentifier
+    type: uuid
+    description: Kriya-issued unique identifier for a company, returned by CompaniesSearch.
+  - name: merchantCompanyIdentifier
+    type: string
+    description: >-
+      Merchant-side identifier for a company. Permanently and uniquely linked to a
+      single kriyaCompanyIdentifier once associated.
+  - name: merchantOrderId
+    type: string
+    description: Merchant-side order identifier used as the order path parameter.
+events:
+  webhooks: true
+  detail: asyncapi/kriya-payments-webhooks.yml
+related:
+  authentication: authentication/kriya-authentication.yml
+  errors: errors/kriya-problem-types.yml
+  decline_codes: errors/kriya-decline-codes.yml
+  lifecycle: lifecycle/kriya-lifecycle.yml
+  sandbox: sandbox/kriya-sandbox.yml
+  data_model: data-model/kriya-data-model.yml

@@ -1,0 +1,31 @@
+{
+  "provider": "kriya",
+  "sources": [
+    "kriya-buyers-api-openapi.yml",
+    "kriya-onboarding-api-api-openapi.yml",
+    "kriya-onboardingjourney-api-openapi.yml",
+    "kriya-orders-api-openapi.yml",
+    "kriya-payments-api-openapi.yml",
+    "kriya-scenario-api-openapi.yml"
+  ],
+  "outputs": [
+    "kriya-buyers-api-openapi.yml",
+    "kriya-onboarding-api-api-openapi.yml",
+    "kriya-onboardingjourney-api-openapi.yml",
+    "kriya-orders-api-openapi.yml",
+    "kriya-payments-api-openapi.yml",
+    "kriya-scenario-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "kriya-buyers-api-openapi.yml: info.version missing",
+    "kriya-onboarding-api-api-openapi.yml: info.version missing",
+    "kriya-onboardingjourney-api-openapi.yml: info.version missing",
+    "kriya-orders-api-openapi.yml: info.version missing",
+    "kriya-payments-api-openapi.yml: info.version missing",
+    "kriya-scenario-api-openapi.yml: info.version missing"
+  ],
+  "notes": [],
+  "skipped": []
+}
