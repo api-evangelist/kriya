@@ -1,21 +1,135 @@
 aid: kriya
 name: Kriya
-description: 'Kriya is a company surfaced as a portfolio company of northzone and added to the API Evangelist
-  network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.'
+description: 'Kriya (Kriya Finance Limited, London) is a UK B2B embedded-finance and
+  working-capital provider that lets merchants offer trade credit to their business
+  buyers. Its products span Embedded PayLater (B2B buy-now-pay-later terms at checkout),
+  Invoice Finance, working capital loans, buyer authentication, offline payments and
+  a Kriya-on-Stripe integration. Kriya publishes two partner-facing REST APIs — the
+  Payments API for buyer registration, risk decisioning, order lifecycle and payment
+  deductions, and the Onboarding API for automating company and KYC checks — alongside
+  a hosted Payments Journey and Onboarding Journey web flow, HMAC-signed webhooks,
+  a dedicated test environment with scenario simulators, and e-commerce plugins for
+  BigCommerce, Magento, nopCommerce, PrestaShop and Salesforce. Kriya was acquired
+  by Allica Bank in October 2025.'
 url: https://raw.githubusercontent.com/api-evangelist/kriya/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.kriya.co/images/KriyaPaymentsAPI-API-Integration-Sequence-Flow.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - northzone
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Fintech
-apis: []
+- Payments
+- Embedded Finance
+- Buy Now Pay Later
+- B2B Payments
+- Invoice Finance
+- Lending
+- Working Capital
+- Onboarding
+- KYC
+- United Kingdom
+apis:
+- aid: kriya:kriya-buyers-api
+  name: Kriya Buyers API
+  description: The Buyers API from Kriya — 6 operation(s) for buyers.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - Buyers
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-buyers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
+- aid: kriya:kriya-onboarding-api-api
+  name: Kriya Onboarding API API
+  description: The Onboarding API API from Kriya — 2 operation(s) for onboarding api.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - Onboarding API
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-onboarding-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
+- aid: kriya:kriya-onboardingjourney-api
+  name: Kriya OnboardingJourney API
+  description: The OnboardingJourney API from Kriya — 1 operation(s) for onboardingjourney.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - OnboardingJourney
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-onboardingjourney-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
+- aid: kriya:kriya-orders-api
+  name: Kriya Orders API
+  description: The Orders API from Kriya — 7 operation(s) for orders.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
+- aid: kriya:kriya-payments-api
+  name: Kriya Payments API
+  description: The Payments API from Kriya — 3 operation(s) for payments.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
+- aid: kriya:kriya-scenario-api
+  name: Kriya Scenario API
+  description: The Scenario API from Kriya — 1 operation(s) for scenario.
+  humanURL: https://docs.kriya.co/payments
+  baseURL: https://api.kriya.co/payments/
+  tags:
+  - Scenario
+  properties:
+  - type: OpenAPI
+    url: openapi/kriya-scenario-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kriya.co/payments
+  - type: Documentation
+    url: https://docs.kriya.co/onboarding
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -24,3 +138,58 @@ maintainers:
 common:
 - type: Website
   url: https://www.kriya.co
+- type: DeveloperPortal
+  url: https://docs.kriya.co/
+- type: Documentation
+  url: https://docs.kriya.co/payments
+- type: APIReference
+  url: https://docs.kriya.co/payments#section/API-Endpoints
+- type: GettingStarted
+  url: https://docs.kriya.co/payments#section/Integration-Scenarios
+- type: Support
+  url: https://www.kriya.co/contact-us
+- type: Blog
+  url: https://www.kriya.co/blog
+- type: Login
+  url: https://merchant.kriya.co/
+- type: TermsOfService
+  url: https://www.kriya.co/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.kriya.co/privacy-policy
+- type: Security
+  url: https://www.kriya.co/responsible-disclosure
+- type: Authentication
+  url: authentication/kriya-authentication.yml
+- type: Conventions
+  url: conventions/kriya-conventions.yml
+- type: ErrorCatalog
+  url: errors/kriya-problem-types.yml
+- type: DeclineCodes
+  url: errors/kriya-decline-codes.yml
+- type: Lifecycle
+  url: lifecycle/kriya-lifecycle.yml
+- type: Conformance
+  url: conformance/kriya-conformance.yml
+- type: Webhooks
+  url: asyncapi/kriya-payments-webhooks.yml
+- type: Sandbox
+  url: sandbox/kriya-sandbox.yml
+- type: DataModel
+  url: data-model/kriya-data-model.yml
+- type: Components
+  url: components/kriya-components.yml
+- type: MCPServer
+  url: mcp/kriya-mcp.yml
+- type: LLMsTxt
+  url: llms/kriya-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: VulnerabilityDisclosure
+  url: security/kriya-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/kriya-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
