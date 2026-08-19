@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kriya Onboarding Buyers Payments API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Registers a payment deduction for an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kriya.dev/onboarding/payments/deduction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a payment deduction to reduce the outstanding balance of an invoice due to credit notes or external repayments."
+        },
+        {
+          "info": {
+            "name": "Retrieves payment deduction information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kriya.dev/onboarding/payments/deduction/:paymentIdentifier",
+            "params": [
+              {
+                "name": "paymentIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment deduction assigned by Kriya."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific payment deduction using its identifier."
+        },
+        {
+          "info": {
+            "name": "Fetches list of payment deductions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kriya.dev/onboarding/payments/deductions",
+            "params": [
+              {
+                "name": "InvoiceReferenceNumber",
+                "value": "",
+                "type": "query",
+                "description": "Invoice reference number to filter by."
+              },
+              {
+                "name": "PaymentDeductionStatus",
+                "value": "",
+                "type": "query",
+                "description": "Payment status to filter by."
+              }
+            ]
+          },
+          "docs": "Fetches a list of existing payment deductions with optional filters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

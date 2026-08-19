@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kriya Onboarding Buyers OnboardingJourney API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OnboardingJourney",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a blank Onboarding Journey without any details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kriya.dev/onboarding/create"
+          },
+          "docs": "Create a blank Onboarding Journey without any details. However, if an Onboarding Journey already exists and all its associated additional Checks remain incomplete (either not initiated or in 'Pending' or 'Submitted' statuses), a new journey won't be initiated. Instead, the response will provide a link to the pre-existing journey."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

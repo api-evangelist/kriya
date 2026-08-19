@@ -1,0 +1,710 @@
+{
+  "item": [
+    {
+      "id": "5c521131-3e26-4806-bd1c-dd787ae57b87",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5069c469-7bf4-4164-b7a5-e12eb2ae02b8",
+          "name": "Registers a payment deduction for an invoice",
+          "request": {
+            "name": "Registers a payment deduction for an invoice",
+            "description": {
+              "content": "Registers a payment deduction to reduce the outstanding balance of an invoice due to credit notes or external repayments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "deduction"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a69141b-754b-46de-96a5-180b2c9da62c",
+              "name": "Details of the newly created payment deduction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"buyer\": {\n    \"totalLimit\": 5860,\n    \"availableLimit\": 484,\n    \"usedLimit\": 3300\n  },\n  \"paymentIdentifier\": \"string\",\n  \"type\": \"DirectPayment\",\n  \"invoiceReferenceNumber\": \"string\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"status\": \"Applied\",\n  \"createdOn\": \"1961-12-24T02:21:08.684Z\",\n  \"processedOn\": \"1995-06-05T05:30:14.065Z\",\n  \"paymentReference\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d38b7e63-8433-4cca-b1e9-b740653cafda",
+              "name": "The request body could not be understood by the server or contains semantic errors. The response body provides details of the specific reason for the error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1966-07-10T20:21:08.746Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d2ebd90-82b7-4c2c-83ef-97edc31b65e2",
+              "name": "Invalid API Key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0646217-9c3f-4837-8be5-5e9e1eb6c012",
+              "name": "Provided data result in a conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7467dfb-3db9-45f6-8125-2e15ace5652d",
+              "name": "Something went wrong, please get in touch with tech team.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"invoiceReferenceNumber\": \"<string>\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"creditNoteNumber\": \"<string>\",\n  \"paymentType\": \"<string>\",\n  \"uniqueKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89e03752-92a3-4032-aee8-ff1fcf7cad48",
+          "name": "Retrieves payment deduction information",
+          "request": {
+            "name": "Retrieves payment deduction information",
+            "description": {
+              "content": "Retrieves detailed information about a specific payment deduction using its identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "deduction",
+                ":paymentIdentifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentIdentifier",
+                  "description": "(Required) Unique identifier of the payment deduction assigned by Kriya."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c00fbcda-7e70-4b51-a95b-157165c9a9b1",
+              "name": "Payment deduction details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction",
+                    ":paymentIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentIdentifier",
+                      "description": "(Required) Unique identifier of the payment deduction assigned by Kriya."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentIdentifier\": \"string\",\n  \"type\": \"DirectPayment\",\n  \"invoiceReferenceNumber\": \"string\",\n  \"processType\": \"AdvanceDeduction\",\n  \"payment\": {\n    \"amount\": \"<long>\",\n    \"currency\": \"<string>\"\n  },\n  \"status\": \"Applied\",\n  \"createdOn\": \"1947-01-05T08:16:59.152Z\",\n  \"processedOn\": \"2001-07-17T08:13:50.518Z\",\n  \"paymentReference\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cc548f2-0e44-4c87-a446-530dda25a5d5",
+              "name": "Invalid API Key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction",
+                    ":paymentIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentIdentifier",
+                      "description": "(Required) Unique identifier of the payment deduction assigned by Kriya."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91989e98-c590-4f90-9f67-fa71fbb4a924",
+              "name": "The resource with this identifier was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction",
+                    ":paymentIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentIdentifier",
+                      "description": "(Required) Unique identifier of the payment deduction assigned by Kriya."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9ffa207-dda2-4902-8890-98463f2ad1a6",
+              "name": "Something went wrong, please get in touch with tech team.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deduction",
+                    ":paymentIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentIdentifier",
+                      "description": "(Required) Unique identifier of the payment deduction assigned by Kriya."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72ab86aa-35ce-49c1-a952-a9b5ae58910e",
+          "name": "Fetches list of payment deductions",
+          "request": {
+            "name": "Fetches list of payment deductions",
+            "description": {
+              "content": "Fetches a list of existing payment deductions with optional filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "deductions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "InvoiceReferenceNumber",
+                  "value": "<string>",
+                  "description": "Invoice reference number to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "PaymentDeductionStatus",
+                  "value": "applied",
+                  "description": "Payment status to filter by."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2859821-11ae-4b53-8be5-ea1d87d528bc",
+              "name": "List of existing payment deductions. Only 100 of the most recent payments are returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "InvoiceReferenceNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PaymentDeductionStatus",
+                      "value": "applied"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"paymentIdentifier\": \"string\",\n    \"type\": \"CreditNote\",\n    \"invoiceReferenceNumber\": \"string\",\n    \"processType\": \"AdvanceDeduction\",\n    \"payment\": {\n      \"amount\": \"<long>\",\n      \"currency\": \"<string>\"\n    },\n    \"status\": \"Processed\",\n    \"createdOn\": \"1948-04-13T22:26:01.662Z\",\n    \"processedOn\": \"2000-11-25T03:19:27.648Z\",\n    \"paymentReference\": \"string\"\n  },\n  {\n    \"paymentIdentifier\": \"string\",\n    \"type\": \"Dispute\",\n    \"invoiceReferenceNumber\": \"string\",\n    \"processType\": \"AdvanceDeduction\",\n    \"payment\": {\n      \"amount\": \"<long>\",\n      \"currency\": \"<string>\"\n    },\n    \"status\": \"Applied\",\n    \"createdOn\": \"1958-11-20T08:41:41.641Z\",\n    \"processedOn\": \"2020-05-26T23:32:41.548Z\",\n    \"paymentReference\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81cccbdb-9cf3-40dd-8012-33a24650b639",
+              "name": "Invalid API Key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "InvoiceReferenceNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PaymentDeductionStatus",
+                      "value": "applied"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00941d31-0217-4c84-bd06-65d5ae38734b",
+              "name": "Something went wrong, please get in touch with tech team.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "deductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "InvoiceReferenceNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "PaymentDeductionStatus",
+                      "value": "applied"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"date\": \"1982-07-30T01:38:54.311Z\",\n  \"operationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kriya.dev/onboarding/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ad80b524-d6f2-41f2-a1fc-c5c13f494e81",
+    "name": "Kriya Onboarding Buyers Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<a name=\"introduction\"></a>\n# Introduction\nWelcome to Onboarding API, an extension to the existing [KriyaPaymentsApi platform](https://docs.kriya.co/payments) that allows partners to automate onboarding process, and to view results of these checks in a simple way.\n\n>Access to the API is available to all valid users through the same KriyaPaymentsApi credentials.\n\nDevelopers can use this documentation to understand how to automate onboarding process with Kriya.\n\n## Cross-Origin Resource Sharing\n\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with W3C spec. That allows cross-domain communication from the browser. Furthermore, all responses have a wildcard same-origin, making them wholly public and accessible to everyone, including any code on any site.\n\n### [Authorization](https://docs.kriya.co/payments#section/Introduction/Authorization)\n### [Rate Limiting](https://docs.kriya.co/payments#section/Introduction/Rate-Limiting)\n### [Response Status Codes](https://docs.kriya.co/payments#section/Introduction/Response-Status-Codes)\n\n<a name=\"definitions\"></a>\n# Definitions\n\n**Onboarding**: onboarding is a process that must be completed by buyers before they can start using Kriya. Onboarding process generally includes a set of credit checks, fraud checks and other steps. The exact steps in the process depend on the legal entity type (e.g. limited company, sole trader) and the merchant account configuration.\nOnboarding process comprises\n1. Required Company Checks\n2. Additional Onboarding Checks\n\n**Additional Onboarding Checks**: Additional onboarding checks are optional and can be embedded into onboarding process by merchant's request. \nKriya offers following checks to minimise the risks: \n1. Identity Verification and Proof of Address \n2. Sanction Screening\n3. Selfie Check\n\n**Company checks**: Credit decisioning checks performed over the company.\n\n**Identity Verification and Proof of Address Check**: A process that cross-references the personal and address information provided by the individual with the data held by credit bureaus or other public/private registries.\n\n**Sanction Screening**: A process that verify that the subject of screening is not in the lists of sanctioned/high-risk entities and sanctioned/high-risk/politically exposed individuals.\n\n**Selfie Check**: A process of ID(Identification) verification includes the submission of a photo of their ID document and a selfie and their further analysis.\n\n**Onboarding Status**: A buyer characteristic that is considered only when any of the additional checks are required in combination with Risk Decision Status and affect Buyer ability to transact with Kriya. OnboardingStatus is merchant agnostic. Read more [here](#onboarding-status) about possible Onboarding Status values and their meanings.    \n\n**Verified buyer**: A buyer with an onboarding status of Approved.\n\n**Unverified buyer**: A buyer with an onboarding status that is not Approved.\n\n**Onboarding API**: Public API that provides a variety of methods for onboarding initiation.\n\n**Onboarding journey**: Is a web application flow that allow user to input information that is required for onboarding process. \n\n<a name=\"integration-scenarios\"></a>\n# Integration Scenarios\nOnboarding Journey is the main integration scenario that should be used by our partners.\nThere's an OnboardingApi but its functionality is limited to Onboarding Journey initiation.\n\nOnboardingJourney can provide the following functionality\n1. Creation of a Limited Company or Government Entity and execution of Company checks for them\n2. Creation of a Sole Trader and execution of Company checks for it\n3. Gather information required for any additional checks and run them \n4. Display outcome of the onboarding\n\nN.B. Onboarding Journey embedded into Payment Journey for above-mentioned scenarios, so no effort is required from partners who already using Payment Journey integration scenario. \n\n<a name=\"onboarding-journey-initiation\"></a>\n## Onboarding Journey Initiation\nOnboarding Journey can be initiated in the following ways: \n- by making a call to Onboarding API [CreateOnboardingJourney](#tag/Onboarding-API/operation/CreateOnboardingJourney) endpoint: it will return a link to the newly created Onboarding Journey.\n- by redirecting a user to `https://api.kriya.co/onboardingJourney/create?merchantIdentifier=&merchantCompanyIdentifier=&onboardingCompletedUrl=&onboardingIneligibleUrl=`\n  - merchantIdentifier is a required parameter \n  - merchantCompanyIdentifier is autogenerated when not provided\n  - onboardingIneligibleUrl defaults to https://kriya.co when not provided\n  - onboardingCompletedUrl defaults to https://kriya.co when not provided\n  \nThis API request will return a location header in the response to redirect the user to the newly created Onboarding Journey. \n\n## Onboarding Journey Limited Companies Company Check Demonstration\nThe following videos illustrate the comprehensive, end-to-end journey from the buyer's viewpoint.\nBoth of them showcase the sequence starting from a buyer's decision to use Kriya PayLater, leading up to the redirection to Kriya’s Onboarding Journey by the merchant website.\nInternally, the merchant website should use any of the above-mentioned approaches for initiation and redirection to Onboarding Journey. It's important to highlight that a specific buyer (identified by merchantCompanyIdentifier) will consistently be associated with the same onboarding link.\n\n### Additional Checks are not Required by a merchant\n![Company Check Journey without Additional Checks Walkthrough](https://cdn.kriya.co/images/OnboardingApi-Company-Checks-KYC-off.gif)\n\n### Additional Checks are Required by merchant\n![Company Check Journey with Additional Checks Walkthrough](https://cdn.kriya.co/images/OnboardingApi-Company-Checks-KYC-on.gif)\n\nOnce the company checks are completed and the director is chosen there are several ways for the director can proceed with additional checks:\n- in the case when the selected director is the current user within the journey, they can continue with onboarding by clicking `Start` button on `What's next page`.\n- the buyer representative who initiated the onboarding can copy the link by clicking `Copy` button on `What's next page` and pass it via any communication channel to dedicated director.\n- an email will be sent to provided director's email address with an invitation for director to complete onboarding process.\n\n\nN.B. Each Merchant Company Identifier is uniquely linked to a single Kriya Company Identifier. Once this association is set, it becomes permanent. As a result, whenever the Merchant Company Identifier is provided, the corresponding company information will be autofilled based on this established linkage.\n\n<a name=\"sole-trader-onboarding\"></a>\n## Sole Trader Onboarding\nOnboarding Journey for a new Sole Trader includes\n- collection of Sole Trader's details that will be used for automated check\n- collection of the answers to eligibility\n- receiving acknowledgement and confirmation for the Declaration of Sole Trader for Kriya agreement\n- execution of company checks to ensure eligibility for Kriya PayLater\n\nOnboarding can be initiated using of the approaches listed [here](#onboarding-journey-initiation)\n\nThe following video illustrates the comprehensive, end-to-end journey from the viewpoint of a Sole Trader.\nThis visual guide begins at the moment when merchant redirects a new Sole Trader to Onboarding Journey.\n\n![Sole Trader onboarding](https://cdn.kriya.co/images/Onboarding_SoleTrader.gif)\n                                                                                                     \n \n<a name=\"payment-journey-integration\"></a>\n## Payment Journey and Onboarding Journey integration\nWhen Payment Journey is run for a new buyer then the Onboarding Journey is initiated. \nIt's worth to mention that there are currently several scenarios that are covered by Onboarding Journey \n\n\n- running eligibility check only for a new Limited Company when no additional checks are required by merchant: there's a seamless transition from the Payment Journey to the Onboarding Journey and back.\n \n ![Eligibility Check - Limited Company / Government Entity](https://cdn.kriya.co/images/PaymentJourney_OnboardingJourney_RiskCheck_LimitedCompany.gif)\n\nN.B. When additional checks are required by merchant then redirection back to Payment Journey happens only when the user that undergo onboarding checks is a director. In other cases redirection won't happen and user will end up Payment Journey on Onboarding Completion page from where they can return back to merchant site and initiate another Payment Journey.\n\n- onboarding of a new Sole Trader and running company checks when additional Selfie check is required by merchant: the user will be redirected from the Payment Journey to the Onboarding Journey and back (in case when all checks successfully completed)\n\n\n ![Sole Trader Onboarding](https://cdn.kriya.co/images/PaymentJourney_OnboardingJourney_Onboarding_And_CompanyChecks_SoleTrader.gif)\n\n<a name=\"data-types\"></a>\n# Data Types\n\nThe following section outlines some specific ways in which data should be interpreted or sent in requests to and from the API.\n\n<a name=\"kriyacompanyidentifier\"></a>\n## Kriya Company Identifier (KriyaCompanyIdentifier)\nKriya Company Identifier is the unique identifier of a Limited Company in the Payments API. It is retrieved firstly via the Kriya Payments API `Search` endpoint.\n\n<a name=\"merchantcompanyidentifier\"></a>\n## Merchant Company Identifier (MerchantCompanyIdentifier)\nThe Merchant Company Identifier serves as an internal reference for merchants, uniquely identifying a company within the system. This identifier is assigned during the company onboarding process. It's crucial to note that once established, the mapping between the Merchant Company Identifier and the Kriya Company Identifier becomes immutable, ensuring a consistent and reliable reference point throughout the system's usage.\n\n<a name=\"nationalid\"></a>\n## National Id (NationalId)\nNational identifier of a company: in the UK it is the company registration number.\n\n<a name=\"defined-types\"></a>\n# Defined Types\n\n> Unless specified otherwise, all properties are `Required` when making API calls.\n\n\n<a name=\"person\"></a>\n## Person\nDefines the minimum required fields that represent a person.\n\n| Property    | Data Type | Description                                                   | Constraints                                                                                                     |\n|-------------|-----------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|\n| FullName    | String    | Full name of a person                                         | It must be between 1 and 128 characters. Director Full Name must match information from Company House registry. |\n| Email       | String    | Contact email that will be used for communication purposes    | It must be between 1 and 128 characters. Should be a valid email.                                               |\n\n<a name=\"onboarding-status\"></a>\n## Onboarding Status\n\n| Name         | Description                                                                                                         |\n|--------------|---------------------------------------------------------------------------------------------------------------------|\n| NotStarted   | Default for all newly created companies.                                                                            |\n| InProgress   | Status of an eligible company for which additional onboarding checks required by the merchant have been initiated.  |\n| Passed       | Represents a company for which all additional onboarding checks have been successfully completed.                   |\n| Failed       | Represents a company for which any of the additional onboarding checks have failed.                                 |\n| ManualReview | Represents a company for which any of the additional onboarding checks require manual review.                       |\n\n\n<a name=\"requester\"></a>\n## Requester\nDefines the minimum required fields that represent a requester\n\n| Property    | Data Type | Description                                                | Constraints                                                                                         |\n|-------------|-----------|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|\n| FullName    | String    | Full name of a person                                      | It must be between 1 and 128 characters.                                                            |\n| Email       | String    | Contact email that will be used for communication purposes | It must be between 1 and 128 characters. Should be a valid email.                                   |\n| PhoneNumber | String    | Contact mobile phone number that will be used in 2FA       | It must be between 1 and 16 characters. Should be a valid mobile phone number that can receive SMS. |\n\n<a name=\"onboarding-journey\"></a>\n## Onboarding Journey\n\nAdditional information required for smooth Onboarding Journey web application flows:\n\n| Property      | Data Type | Description                                                                                                                                                                                                                                                                        | Is Required for <br/> Company Check?   |\n|---------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|\n| AbandonedUrl  | Url       | This URL determines the destination to which the director will be redirected if they choose to exit the Onboarding Journey prematurely.                                                                                                                                            | Yes                                    |\n| CompleteUrl   | Url       | This URL specifies the webpage to which the director will be redirected upon successful completion of the Onboarding Journey, ensuring a seamless transition to the next phase or action.                                                                                          | Yes                                    |\n| IneligibleUrl | Url       | This URL is the designated redirection point for directors if the company does not successfully pass the eligibility check during the Onboarding Journey, providing a pathway to additional resources or next steps.                                                               | Yes                                    |\n| InReviewUrl   | Url       | This URL is the specified redirection destination for directors in instances where the company does not pass the automatic eligibility check and subsequently necessitates a manual review during the Onboarding Journey, guiding them toward further instructions or information. | Yes                                    | \n\n<a name=\"webhooks\"></a>\n# Webhooks\nThe Onboarding API introduces extensions to the existing  [BuyerRiskDecisionChanged](https://docs.kriya.co/payments#section/Webhooks/) webhook within the Kriya Payments API by incorporating additional field to provide more detailed insights into the onboarding status:\n1.  `onboardingStatus`: This field displays the current [Onboarding Status](#onboarding-status) for the buyer.\n\n\n<a name=\"api-environments\"></a>\n# API Environments\n\nThe API currently supports two environments, that is, both **Test** and **Production**. No any further actions is required if you have already requested access to each of these environments for Kriya Payments API.\n\n## Test\n\nThe Test API can be accessed through the base URL [https://api.kriya.dev/onboarding/](https://api.kriya.dev/onboarding/)\n\nThe Test environment has been created to allow partners to test their integrations. Alongside this, the Test API also supports overriding certain internal operations to support testing scenarios during integrations. See [Test Scenarios Simulators](#test-scenarios-simulators) for more details.\n\n> You may, on occasion, find API requests taking over 1 second anywhere up to 15 seconds. This is due to the technology being used in our test environment where cold starts can occur. This will not be the case in the Production environment.\n\n<a name=\"test-scenarios-simulators\"></a>\n### Test Scenario Simulators\n\nDuring your integration with the Kriya Onboarding API, it's pivotal to test various scenarios to ensure your system adeptly handles all possible outcomes. Our test environment is equipped with additional API endpoints, specifically designed to simulate various scenarios, enabling you to thoroughly test your integration. These simulations might not be directly achievable via the production endpoints, providing a comprehensive testing ground to validate your integration's robustness and reliability.\n\n#### Onboarding Status Transitions\nCompany Onboarding Status is taking into consideration by merchant who requires additional checks. Onboarding Status calculation is based on all additional checks outcomes.\nTo facilitate comprehensive testing across these specific statuses, we provide an endpoint within the Test environment, enabling you to update your Onboarding Status. There are no restrictions for the status transitions: any status can be transitioned to any other.\n\nThe endpoint can be called using the following request:\nPUT [https://api.kriya.dev/onboarding/scenario/onboardingStatus](https://api.kriya.dev/onboarding/scenario/onboardingStatus)\n\n```json\n{\n    \"merchantCompanyIdentifier\": \"GB02398929\",\n    \"onboardingStatus\": \"Passed\"\n}\n```\n\n## Production\n\nThe Production API can be accessed through the base URL [https://api.kriya.co/onboarding/](https://api.kriya.co/onboarding/).\n\n<a name=\"support\"></a>\n# Support\n\nIf you have any questions concerning API or suggestions or are facing any issues, please get in touch with us at <apisupport@kriya.co>.\n\n# API Endpoints\n\n\nContact Support:\n Name: Support\n Email: apisupport@kriya.co",
+      "type": "text/plain"
+    }
+  }
+}

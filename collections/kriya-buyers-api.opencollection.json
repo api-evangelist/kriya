@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kriya Onboarding Buyers API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buyers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Updates buyer risk decision status for testing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kriya.dev/onboarding/scenario/buyers/risk-decision",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulates a buyer's risk decision status for testing purposes in the sandbox environment."
+        },
+        {
+          "info": {
+            "name": "Searches for companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kriya.dev/onboarding/companies/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches for companies."
+        },
+        {
+          "info": {
+            "name": "Registers a new buyer company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kriya.dev/onboarding/buyers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new buyer company in the Kriya Payments system. If the buyer already exists, the request will succeed without modifying the existing data. To amend the Bank Account details or the Contact details please refer to the other buyer endpoints."
+        },
+        {
+          "info": {
+            "name": "Retrieves buyer payment options and fees",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kriya.dev/onboarding/buyers/pricing-scheme/single",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the available payment options and associated fees for a buyer."
+        },
+        {
+          "info": {
+            "name": "Fetches buyer company information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kriya.dev/onboarding/buyers/single",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetches detailed information about a buyer company using its identifier."
+        },
+        {
+          "info": {
+            "name": "Modifies buyer's contact information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kriya.dev/onboarding/buyers/contact-details",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the contact details of a buyer company."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

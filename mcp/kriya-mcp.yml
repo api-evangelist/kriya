@@ -2,12 +2,10 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/kriya-payments-openapi.yaml, openapi/kriya-onboarding-openapi.yaml
-note: >-
-  Kriya publishes no hosted or remote MCP server. Searches of docs.kriya.co,
-  www.kriya.co and the npm registry found no first-party MCP package and no Kriya
-  GitHub organisation. This is a CANDIDATE tool list derived one-to-one from the
-  operationIds in the two published OpenAPI documents — a design starting point, not
-  a Kriya claim.
+note: Kriya publishes no hosted or remote MCP server. Searches of docs.kriya.co, www.kriya.co and the
+  npm registry found no first-party MCP package and no Kriya GitHub organisation. This is a CANDIDATE
+  tool list derived one-to-one from the operationIds in the two published OpenAPI documents — a design
+  starting point, not a Kriya claim.
 server:
   name: kriya
   transport: http
@@ -17,20 +15,14 @@ authentication:
   type: apiKey
   header: X-Kriya-ApiKey
   detail: authentication/kriya-authentication.yml
-  note: >-
-    A partner API key is required. Test and Production keys differ; an MCP
-    deployment should bind one environment explicitly.
+  note: A partner API key is required. Test and Production keys differ; an MCP deployment should bind
+    one environment explicitly.
 safety_notes:
-  - >-
-    TransitionOrderStatus moves real money — ReadyToAdvance triggers Kriya to advance
-    funds to the Merchant and Supplier and cannot be reversed or cancelled. Any agent
-    exposure should require human confirmation.
-  - >-
-    The three Scenario tools exist only in the Test environment and must never be
-    wired against Production.
-  - >-
-    CompaniesSearch is rate-limited to 5 requests per second, far tighter than the
-    2000-per-5-minutes API default.
+- TransitionOrderStatus moves real money — ReadyToAdvance triggers Kriya to advance funds to the Merchant
+  and Supplier and cannot be reversed or cancelled. Any agent exposure should require human confirmation.
+- The three Scenario tools exist only in the Test environment and must never be wired against Production.
+- CompaniesSearch is rate-limited to 5 requests per second, far tighter than the 2000-per-5-minutes API
+  default.
 tools:
 - name: search_companies
   description: Search company registries to resolve a kriyaCompanyIdentifier.
@@ -69,9 +61,8 @@ tools:
   source_operation: openapi/kriya-payments-openapi.yaml#UpdateOrder
   read_only: false
 - name: transition_order_status
-  description: >-
-    Transition an order to a new status. Consequential — ReadyToAdvance releases
-    funds and is irreversible.
+  description: Transition an order to a new status. Consequential — ReadyToAdvance releases funds and
+    is irreversible.
   source_operation: openapi/kriya-payments-openapi.yaml#TransitionOrderStatus
   read_only: false
   requires_confirmation: true
@@ -96,8 +87,7 @@ tools:
   source_operation: openapi/kriya-payments-openapi.yaml#ListPaymentsDeductions
   read_only: true
 - name: create_onboarding_journey
-  description: >-
-    Create an Onboarding Journey for a company and return the onboarding redirect URL.
+  description: Create an Onboarding Journey for a company and return the onboarding redirect URL.
   source_operation: openapi/kriya-onboarding-openapi.yaml#CreateOnboardingJourney
   read_only: false
 - name: create_blank_onboarding_journey
@@ -117,3 +107,9 @@ test_only_tools:
   description: Force a company's onboarding status. Test environment only.
   source_operation: openapi/kriya-onboarding-openapi.yaml#UpdateOnboardingStatusScenario
   environment: test
+deployment:
+  mode: none
+  verified: derived
+  tools: 17
+  checked: '2026-08-12'
+  source: catalog MCP census

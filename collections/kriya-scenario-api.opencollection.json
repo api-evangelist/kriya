@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kriya Onboarding Buyers Scenario API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scenario",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update onboarding status for testing purposes. Only available in the staging environment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kriya.dev/onboarding/scenario/onboardingStatus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update onboarding status for testing purposes. Only available in the staging environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,267 @@
+{
+  "item": [
+    {
+      "id": "e7e7ece6-448f-4539-9df6-d1f30ae160bc",
+      "name": "Onboarding API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9e4a7bbe-7ecc-4113-9b19-b75313bf1886",
+          "name": "Create a blank Onboarding Journey without any details",
+          "request": {
+            "name": "Create a blank Onboarding Journey without any details",
+            "description": {
+              "content": "Create a blank Onboarding Journey without any details. However, if an Onboarding Journey already exists and all its associated additional Checks remain incomplete (either not initiated or in 'Pending' or 'Submitted' statuses), a new journey won't be initiated. Instead, the response will provide a link to the pre-existing journey.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0926d395-f583-41d9-ab2c-44624ef8bc47",
+              "name": "No description",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "839f1177-618b-4110-9aad-0c8c21d4d9cd",
+          "name": "Create an Onboarding Journey for when the company is not yet onboarded",
+          "request": {
+            "name": "Create an Onboarding Journey for when the company is not yet onboarded",
+            "description": {
+              "content": "Create an Onboarding Journey for companies that haven't been onboarded yet. However, if an Onboarding Journey already exists and all its associated checks remain incomplete (either not initiated or in 'Pending' or 'Submitted' statuses), a new journey won't be initiated. Instead, the response will provide a link to the pre-existing journey.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "onboardingJourney"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchantCompanyIdentifier\": \"<string>\",\n  \"kriyaCompanyIdentifier\": \"<uuid>\",\n  \"nationalId\": \"<string>\",\n  \"onboardingJourney\": {\n    \"completeUrl\": \"<string>\",\n    \"ineligibleUrl\": \"<string>\",\n    \"abandonedUrl\": \"<string>\",\n    \"inReviewUrl\": \"<string>\"\n  },\n  \"companyType\": \"<string>\",\n  \"requesterEmail\": \"<string>\",\n  \"requesterPhoneNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "47ff049b-27f8-405f-93db-8fbaddc56956",
+              "name": "Payload of CreateOnboardingJourneyResponse",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "onboardingJourney"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantCompanyIdentifier\": \"<string>\",\n  \"kriyaCompanyIdentifier\": \"<uuid>\",\n  \"nationalId\": \"<string>\",\n  \"onboardingJourney\": {\n    \"completeUrl\": \"<string>\",\n    \"ineligibleUrl\": \"<string>\",\n    \"abandonedUrl\": \"<string>\",\n    \"inReviewUrl\": \"<string>\"\n  },\n  \"companyType\": \"<string>\",\n  \"requesterEmail\": \"<string>\",\n  \"requesterPhoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"onboardingRedirectUrl\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcbcacf2-da2c-4267-8110-a7f651b471eb",
+              "name": "Payload of ProblemDetails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "onboardingJourney"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantCompanyIdentifier\": \"<string>\",\n  \"kriyaCompanyIdentifier\": \"<uuid>\",\n  \"nationalId\": \"<string>\",\n  \"onboardingJourney\": {\n    \"completeUrl\": \"<string>\",\n    \"ineligibleUrl\": \"<string>\",\n    \"abandonedUrl\": \"<string>\",\n    \"inReviewUrl\": \"<string>\"\n  },\n  \"companyType\": \"<string>\",\n  \"requesterEmail\": \"<string>\",\n  \"requesterPhoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ],\n  \"date\": \"1962-10-22T18:14:58.764Z\",\n  \"operationId\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"reasons\": [\n    {\n      \"reasons\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        }\n      ]\n    },\n    {\n      \"reasons\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        }\n      ]\n    }\n  ],\n  \"statusCode\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c097c12-221a-4263-a6d2-ed744e7174df",
+              "name": "Payload of ProblemDetails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "onboardingJourney"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantCompanyIdentifier\": \"<string>\",\n  \"kriyaCompanyIdentifier\": \"<uuid>\",\n  \"nationalId\": \"<string>\",\n  \"onboardingJourney\": {\n    \"completeUrl\": \"<string>\",\n    \"ineligibleUrl\": \"<string>\",\n    \"abandonedUrl\": \"<string>\",\n    \"inReviewUrl\": \"<string>\"\n  },\n  \"companyType\": \"<string>\",\n  \"requesterEmail\": \"<string>\",\n  \"requesterPhoneNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ],\n  \"date\": \"1949-05-27T13:07:16.758Z\",\n  \"operationId\": \"string\",\n  \"message\": \"string\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"reasons\": [\n    {\n      \"reasons\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        }\n      ]\n    },\n    {\n      \"reasons\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/iError detected>\"\n        }\n      ]\n    }\n  ],\n  \"statusCode\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kriya.dev/onboarding/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f1ffd72a-590d-4732-952c-e1b245e3d1e3",
+    "name": "Kriya Onboarding Buyers Onboarding API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<a name=\"introduction\"></a>\n# Introduction\nWelcome to Onboarding API, an extension to the existing [KriyaPaymentsApi platform](https://docs.kriya.co/payments) that allows partners to automate onboarding process, and to view results of these checks in a simple way.\n\n>Access to the API is available to all valid users through the same KriyaPaymentsApi credentials.\n\nDevelopers can use this documentation to understand how to automate onboarding process with Kriya.\n\n## Cross-Origin Resource Sharing\n\nThis API features Cross-Origin Resource Sharing (CORS) implemented in compliance with W3C spec. That allows cross-domain communication from the browser. Furthermore, all responses have a wildcard same-origin, making them wholly public and accessible to everyone, including any code on any site.\n\n### [Authorization](https://docs.kriya.co/payments#section/Introduction/Authorization)\n### [Rate Limiting](https://docs.kriya.co/payments#section/Introduction/Rate-Limiting)\n### [Response Status Codes](https://docs.kriya.co/payments#section/Introduction/Response-Status-Codes)\n\n<a name=\"definitions\"></a>\n# Definitions\n\n**Onboarding**: onboarding is a process that must be completed by buyers before they can start using Kriya. Onboarding process generally includes a set of credit checks, fraud checks and other steps. The exact steps in the process depend on the legal entity type (e.g. limited company, sole trader) and the merchant account configuration.\nOnboarding process comprises\n1. Required Company Checks\n2. Additional Onboarding Checks\n\n**Additional Onboarding Checks**: Additional onboarding checks are optional and can be embedded into onboarding process by merchant's request. \nKriya offers following checks to minimise the risks: \n1. Identity Verification and Proof of Address \n2. Sanction Screening\n3. Selfie Check\n\n**Company checks**: Credit decisioning checks performed over the company.\n\n**Identity Verification and Proof of Address Check**: A process that cross-references the personal and address information provided by the individual with the data held by credit bureaus or other public/private registries.\n\n**Sanction Screening**: A process that verify that the subject of screening is not in the lists of sanctioned/high-risk entities and sanctioned/high-risk/politically exposed individuals.\n\n**Selfie Check**: A process of ID(Identification) verification includes the submission of a photo of their ID document and a selfie and their further analysis.\n\n**Onboarding Status**: A buyer characteristic that is considered only when any of the additional checks are required in combination with Risk Decision Status and affect Buyer ability to transact with Kriya. OnboardingStatus is merchant agnostic. Read more [here](#onboarding-status) about possible Onboarding Status values and their meanings.    \n\n**Verified buyer**: A buyer with an onboarding status of Approved.\n\n**Unverified buyer**: A buyer with an onboarding status that is not Approved.\n\n**Onboarding API**: Public API that provides a variety of methods for onboarding initiation.\n\n**Onboarding journey**: Is a web application flow that allow user to input information that is required for onboarding process. \n\n<a name=\"integration-scenarios\"></a>\n# Integration Scenarios\nOnboarding Journey is the main integration scenario that should be used by our partners.\nThere's an OnboardingApi but its functionality is limited to Onboarding Journey initiation.\n\nOnboardingJourney can provide the following functionality\n1. Creation of a Limited Company or Government Entity and execution of Company checks for them\n2. Creation of a Sole Trader and execution of Company checks for it\n3. Gather information required for any additional checks and run them \n4. Display outcome of the onboarding\n\nN.B. Onboarding Journey embedded into Payment Journey for above-mentioned scenarios, so no effort is required from partners who already using Payment Journey integration scenario. \n\n<a name=\"onboarding-journey-initiation\"></a>\n## Onboarding Journey Initiation\nOnboarding Journey can be initiated in the following ways: \n- by making a call to Onboarding API [CreateOnboardingJourney](#tag/Onboarding-API/operation/CreateOnboardingJourney) endpoint: it will return a link to the newly created Onboarding Journey.\n- by redirecting a user to `https://api.kriya.co/onboardingJourney/create?merchantIdentifier=&merchantCompanyIdentifier=&onboardingCompletedUrl=&onboardingIneligibleUrl=`\n  - merchantIdentifier is a required parameter \n  - merchantCompanyIdentifier is autogenerated when not provided\n  - onboardingIneligibleUrl defaults to https://kriya.co when not provided\n  - onboardingCompletedUrl defaults to https://kriya.co when not provided\n  \nThis API request will return a location header in the response to redirect the user to the newly created Onboarding Journey. \n\n## Onboarding Journey Limited Companies Company Check Demonstration\nThe following videos illustrate the comprehensive, end-to-end journey from the buyer's viewpoint.\nBoth of them showcase the sequence starting from a buyer's decision to use Kriya PayLater, leading up to the redirection to Kriya’s Onboarding Journey by the merchant website.\nInternally, the merchant website should use any of the above-mentioned approaches for initiation and redirection to Onboarding Journey. It's important to highlight that a specific buyer (identified by merchantCompanyIdentifier) will consistently be associated with the same onboarding link.\n\n### Additional Checks are not Required by a merchant\n![Company Check Journey without Additional Checks Walkthrough](https://cdn.kriya.co/images/OnboardingApi-Company-Checks-KYC-off.gif)\n\n### Additional Checks are Required by merchant\n![Company Check Journey with Additional Checks Walkthrough](https://cdn.kriya.co/images/OnboardingApi-Company-Checks-KYC-on.gif)\n\nOnce the company checks are completed and the director is chosen there are several ways for the director can proceed with additional checks:\n- in the case when the selected director is the current user within the journey, they can continue with onboarding by clicking `Start` button on `What's next page`.\n- the buyer representative who initiated the onboarding can copy the link by clicking `Copy` button on `What's next page` and pass it via any communication channel to dedicated director.\n- an email will be sent to provided director's email address with an invitation for director to complete onboarding process.\n\n\nN.B. Each Merchant Company Identifier is uniquely linked to a single Kriya Company Identifier. Once this association is set, it becomes permanent. As a result, whenever the Merchant Company Identifier is provided, the corresponding company information will be autofilled based on this established linkage.\n\n<a name=\"sole-trader-onboarding\"></a>\n## Sole Trader Onboarding\nOnboarding Journey for a new Sole Trader includes\n- collection of Sole Trader's details that will be used for automated check\n- collection of the answers to eligibility\n- receiving acknowledgement and confirmation for the Declaration of Sole Trader for Kriya agreement\n- execution of company checks to ensure eligibility for Kriya PayLater\n\nOnboarding can be initiated using of the approaches listed [here](#onboarding-journey-initiation)\n\nThe following video illustrates the comprehensive, end-to-end journey from the viewpoint of a Sole Trader.\nThis visual guide begins at the moment when merchant redirects a new Sole Trader to Onboarding Journey.\n\n![Sole Trader onboarding](https://cdn.kriya.co/images/Onboarding_SoleTrader.gif)\n                                                                                                     \n \n<a name=\"payment-journey-integration\"></a>\n## Payment Journey and Onboarding Journey integration\nWhen Payment Journey is run for a new buyer then the Onboarding Journey is initiated. \nIt's worth to mention that there are currently several scenarios that are covered by Onboarding Journey \n\n\n- running eligibility check only for a new Limited Company when no additional checks are required by merchant: there's a seamless transition from the Payment Journey to the Onboarding Journey and back.\n \n ![Eligibility Check - Limited Company / Government Entity](https://cdn.kriya.co/images/PaymentJourney_OnboardingJourney_RiskCheck_LimitedCompany.gif)\n\nN.B. When additional checks are required by merchant then redirection back to Payment Journey happens only when the user that undergo onboarding checks is a director. In other cases redirection won't happen and user will end up Payment Journey on Onboarding Completion page from where they can return back to merchant site and initiate another Payment Journey.\n\n- onboarding of a new Sole Trader and running company checks when additional Selfie check is required by merchant: the user will be redirected from the Payment Journey to the Onboarding Journey and back (in case when all checks successfully completed)\n\n\n ![Sole Trader Onboarding](https://cdn.kriya.co/images/PaymentJourney_OnboardingJourney_Onboarding_And_CompanyChecks_SoleTrader.gif)\n\n<a name=\"data-types\"></a>\n# Data Types\n\nThe following section outlines some specific ways in which data should be interpreted or sent in requests to and from the API.\n\n<a name=\"kriyacompanyidentifier\"></a>\n## Kriya Company Identifier (KriyaCompanyIdentifier)\nKriya Company Identifier is the unique identifier of a Limited Company in the Payments API. It is retrieved firstly via the Kriya Payments API `Search` endpoint.\n\n<a name=\"merchantcompanyidentifier\"></a>\n## Merchant Company Identifier (MerchantCompanyIdentifier)\nThe Merchant Company Identifier serves as an internal reference for merchants, uniquely identifying a company within the system. This identifier is assigned during the company onboarding process. It's crucial to note that once established, the mapping between the Merchant Company Identifier and the Kriya Company Identifier becomes immutable, ensuring a consistent and reliable reference point throughout the system's usage.\n\n<a name=\"nationalid\"></a>\n## National Id (NationalId)\nNational identifier of a company: in the UK it is the company registration number.\n\n<a name=\"defined-types\"></a>\n# Defined Types\n\n> Unless specified otherwise, all properties are `Required` when making API calls.\n\n\n<a name=\"person\"></a>\n## Person\nDefines the minimum required fields that represent a person.\n\n| Property    | Data Type | Description                                                   | Constraints                                                                                                     |\n|-------------|-----------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|\n| FullName    | String    | Full name of a person                                         | It must be between 1 and 128 characters. Director Full Name must match information from Company House registry. |\n| Email       | String    | Contact email that will be used for communication purposes    | It must be between 1 and 128 characters. Should be a valid email.                                               |\n\n<a name=\"onboarding-status\"></a>\n## Onboarding Status\n\n| Name         | Description                                                                                                         |\n|--------------|---------------------------------------------------------------------------------------------------------------------|\n| NotStarted   | Default for all newly created companies.                                                                            |\n| InProgress   | Status of an eligible company for which additional onboarding checks required by the merchant have been initiated.  |\n| Passed       | Represents a company for which all additional onboarding checks have been successfully completed.                   |\n| Failed       | Represents a company for which any of the additional onboarding checks have failed.                                 |\n| ManualReview | Represents a company for which any of the additional onboarding checks require manual review.                       |\n\n\n<a name=\"requester\"></a>\n## Requester\nDefines the minimum required fields that represent a requester\n\n| Property    | Data Type | Description                                                | Constraints                                                                                         |\n|-------------|-----------|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|\n| FullName    | String    | Full name of a person                                      | It must be between 1 and 128 characters.                                                            |\n| Email       | String    | Contact email that will be used for communication purposes | It must be between 1 and 128 characters. Should be a valid email.                                   |\n| PhoneNumber | String    | Contact mobile phone number that will be used in 2FA       | It must be between 1 and 16 characters. Should be a valid mobile phone number that can receive SMS. |\n\n<a name=\"onboarding-journey\"></a>\n## Onboarding Journey\n\nAdditional information required for smooth Onboarding Journey web application flows:\n\n| Property      | Data Type | Description                                                                                                                                                                                                                                                                        | Is Required for <br/> Company Check?   |\n|---------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|\n| AbandonedUrl  | Url       | This URL determines the destination to which the director will be redirected if they choose to exit the Onboarding Journey prematurely.                                                                                                                                            | Yes                                    |\n| CompleteUrl   | Url       | This URL specifies the webpage to which the director will be redirected upon successful completion of the Onboarding Journey, ensuring a seamless transition to the next phase or action.                                                                                          | Yes                                    |\n| IneligibleUrl | Url       | This URL is the designated redirection point for directors if the company does not successfully pass the eligibility check during the Onboarding Journey, providing a pathway to additional resources or next steps.                                                               | Yes                                    |\n| InReviewUrl   | Url       | This URL is the specified redirection destination for directors in instances where the company does not pass the automatic eligibility check and subsequently necessitates a manual review during the Onboarding Journey, guiding them toward further instructions or information. | Yes                                    | \n\n<a name=\"webhooks\"></a>\n# Webhooks\nThe Onboarding API introduces extensions to the existing  [BuyerRiskDecisionChanged](https://docs.kriya.co/payments#section/Webhooks/) webhook within the Kriya Payments API by incorporating additional field to provide more detailed insights into the onboarding status:\n1.  `onboardingStatus`: This field displays the current [Onboarding Status](#onboarding-status) for the buyer.\n\n\n<a name=\"api-environments\"></a>\n# API Environments\n\nThe API currently supports two environments, that is, both **Test** and **Production**. No any further actions is required if you have already requested access to each of these environments for Kriya Payments API.\n\n## Test\n\nThe Test API can be accessed through the base URL [https://api.kriya.dev/onboarding/](https://api.kriya.dev/onboarding/)\n\nThe Test environment has been created to allow partners to test their integrations. Alongside this, the Test API also supports overriding certain internal operations to support testing scenarios during integrations. See [Test Scenarios Simulators](#test-scenarios-simulators) for more details.\n\n> You may, on occasion, find API requests taking over 1 second anywhere up to 15 seconds. This is due to the technology being used in our test environment where cold starts can occur. This will not be the case in the Production environment.\n\n<a name=\"test-scenarios-simulators\"></a>\n### Test Scenario Simulators\n\nDuring your integration with the Kriya Onboarding API, it's pivotal to test various scenarios to ensure your system adeptly handles all possible outcomes. Our test environment is equipped with additional API endpoints, specifically designed to simulate various scenarios, enabling you to thoroughly test your integration. These simulations might not be directly achievable via the production endpoints, providing a comprehensive testing ground to validate your integration's robustness and reliability.\n\n#### Onboarding Status Transitions\nCompany Onboarding Status is taking into consideration by merchant who requires additional checks. Onboarding Status calculation is based on all additional checks outcomes.\nTo facilitate comprehensive testing across these specific statuses, we provide an endpoint within the Test environment, enabling you to update your Onboarding Status. There are no restrictions for the status transitions: any status can be transitioned to any other.\n\nThe endpoint can be called using the following request:\nPUT [https://api.kriya.dev/onboarding/scenario/onboardingStatus](https://api.kriya.dev/onboarding/scenario/onboardingStatus)\n\n```json\n{\n    \"merchantCompanyIdentifier\": \"GB02398929\",\n    \"onboardingStatus\": \"Passed\"\n}\n```\n\n## Production\n\nThe Production API can be accessed through the base URL [https://api.kriya.co/onboarding/](https://api.kriya.co/onboarding/).\n\n<a name=\"support\"></a>\n# Support\n\nIf you have any questions concerning API or suggestions or are facing any issues, please get in touch with us at <apisupport@kriya.co>.\n\n# API Endpoints\n\n\nContact Support:\n Name: Support\n Email: apisupport@kriya.co",
+      "type": "text/plain"
+    }
+  }
+}
