@@ -94,6 +94,8 @@ apis:
   humanURL: https://docs.kriya.co/payments
   baseURL: https://api.kriya.co/payments/
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
