@@ -1,31 +1,40 @@
 {
   "provider": "kriya",
   "sources": [
-    "kriya-buyers-api-openapi.yml",
-    "kriya-onboarding-api-api-openapi.yml",
-    "kriya-onboardingjourney-api-openapi.yml",
-    "kriya-orders-api-openapi.yml",
-    "kriya-payments-api-openapi.yml",
-    "kriya-scenario-api-openapi.yml"
+    "_original/kriya-onboarding-openapi.yaml",
+    "_original/kriya-payments-openapi.yaml"
   ],
   "outputs": [
-    "kriya-buyers-api-openapi.yml",
     "kriya-onboarding-api-api-openapi.yml",
     "kriya-onboardingjourney-api-openapi.yml",
+    "kriya-scenario-api-openapi.yml",
+    "kriya-buyers-api-openapi.yml",
     "kriya-orders-api-openapi.yml",
-    "kriya-payments-api-openapi.yml",
-    "kriya-scenario-api-openapi.yml"
+    "kriya-payments-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [
-    "kriya-buyers-api-openapi.yml: info.version missing",
-    "kriya-onboarding-api-api-openapi.yml: info.version missing",
-    "kriya-onboardingjourney-api-openapi.yml: info.version missing",
-    "kriya-orders-api-openapi.yml: info.version missing",
-    "kriya-payments-api-openapi.yml: info.version missing",
-    "kriya-scenario-api-openapi.yml: info.version missing"
+    "kriya-onboarding-openapi.yaml: info.version missing",
+    "kriya-payments-openapi.yaml: info.version missing"
   ],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kriya-onboarding-openapi.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "kriya-onboarding-openapi.yaml: declared missing tag: Onboarding API",
+    "kriya-onboarding-openapi.yaml: declared missing tag: OnboardingJourney",
+    "kriya-onboarding-openapi.yaml: declared missing tag: Scenario",
+    "kriya-payments-openapi.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "kriya-payments-openapi.yaml: declared missing tag: Buyers",
+    "kriya-payments-openapi.yaml: declared missing tag: Orders",
+    "kriya-payments-openapi.yaml: declared missing tag: Payments"
+  ],
+  "skipped": [
+    "kriya-buyers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kriya-onboarding-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kriya-onboardingjourney-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kriya-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kriya-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kriya-scenario-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
