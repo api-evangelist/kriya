@@ -1,16 +1,14 @@
 aid: kriya
 name: Kriya
-description: 'Kriya (Kriya Finance Limited, London) is a UK B2B embedded-finance and
-  working-capital provider that lets merchants offer trade credit to their business
-  buyers. Its products span Embedded PayLater (B2B buy-now-pay-later terms at checkout),
-  Invoice Finance, working capital loans, buyer authentication, offline payments and
-  a Kriya-on-Stripe integration. Kriya publishes two partner-facing REST APIs — the
-  Payments API for buyer registration, risk decisioning, order lifecycle and payment
-  deductions, and the Onboarding API for automating company and KYC checks — alongside
-  a hosted Payments Journey and Onboarding Journey web flow, HMAC-signed webhooks,
-  a dedicated test environment with scenario simulators, and e-commerce plugins for
-  BigCommerce, Magento, nopCommerce, PrestaShop and Salesforce. Kriya was acquired
-  by Allica Bank in October 2025.'
+description: Kriya (Kriya Finance Limited, London) is a UK B2B embedded-finance and working-capital provider
+  that lets merchants offer trade credit to their business buyers. Its products span Embedded PayLater
+  (B2B buy-now-pay-later terms at checkout), Invoice Finance, working capital loans, buyer authentication,
+  offline payments and a Kriya-on-Stripe integration. Kriya publishes two partner-facing REST APIs — the
+  Payments API for buyer registration, risk decisioning, order lifecycle and payment deductions, and the
+  Onboarding API for automating company and KYC checks — alongside a hosted Payments Journey and Onboarding
+  Journey web flow, HMAC-signed webhooks, a dedicated test environment with scenario simulators, and e-commerce
+  plugins for BigCommerce, Magento, nopCommerce, PrestaShop and Salesforce. Kriya was acquired by Allica
+  Bank in October 2025.
 url: https://raw.githubusercontent.com/api-evangelist/kriya/refs/heads/main/apis.yml
 deliveryModel:
   model: saas
@@ -45,7 +43,7 @@ x-backed-by:
 - northzone
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-09-16'
 tags:
 - Company
 - Fintech
@@ -75,7 +73,7 @@ apis:
   - type: Documentation
     url: https://docs.kriya.co/onboarding
 - aid: kriya:kriya-onboarding-api-api
-  name: Kriya Onboarding API API
+  name: Kriya Onboarding API
   description: The Onboarding API API from Kriya — 2 operation(s) for onboarding api.
   humanURL: https://docs.kriya.co/payments
   baseURL: https://api.kriya.co/payments/
@@ -198,7 +196,10 @@ common:
   url: components/kriya-components.yml
 - type: X-MCPServerCandidate
   url: mcp/kriya-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: LLMsTxt
   url: llms/kriya-llms.txt
 - type: AgentSkill
