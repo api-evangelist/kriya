@@ -27,7 +27,8 @@
     "kriya-payments-openapi.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "kriya-payments-openapi.yaml: declared missing tag: Buyers",
     "kriya-payments-openapi.yaml: declared missing tag: Orders",
-    "kriya-payments-openapi.yaml: declared missing tag: Payments"
+    "kriya-payments-openapi.yaml: declared missing tag: Payments",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "kriya-buyers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
