@@ -64,13 +64,6 @@ components:
           type: string
         message:
           type: string
-    updateOnboardingStatusScenarioCommand:
-      type: object
-      properties:
-        merchantCompanyIdentifier:
-          type: string
-        onboardingStatus:
-          type: string
     problemDetails:
       type: object
       properties:
@@ -174,3 +167,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/iError'
+    updateOnboardingStatusScenarioCommand:
+      type: object
+      properties:
+        merchantCompanyIdentifier:
+          type: string
+        onboardingStatus:
+          type: string

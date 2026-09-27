@@ -149,52 +149,6 @@ paths:
                 $ref: '#/components/schemas/problemDetails'
 components:
   schemas:
-    createPaymentDeductionResponse:
-      type: object
-      properties:
-        buyer:
-          $ref: '#/components/schemas/paymentDeductionBuyer'
-        paymentIdentifier:
-          type: string
-          description: The unique identifier for the payment deduction assigned by Kriya. It can be used to retrieve the payment deduction details using the Kriya Payments API Get endpoint.
-        type:
-          enum:
-          - CreditNote
-          - Dispute
-          - DirectPayment
-          type: string
-          description: Reason to create payment deduction.
-        invoiceReferenceNumber:
-          type:
-          - string
-          - 'null'
-          description: Invoice reference number.
-        processType:
-          enum:
-          - AdvanceDeduction
-          type: string
-          description: The method of settling payment deduction.
-        payment:
-          $ref: '#/components/schemas/monetaryValue'
-        status:
-          enum:
-          - Applied
-          - Processed
-          type: string
-          description: The settlement status of the payment deduction. Applied means Kriya has not received the full deduction amount from the merchant. Processed means Kriya has received the full deduction amount.
-        createdOn:
-          type: string
-          description: Date when the payment deduction has been applied.
-          format: date-time
-        processedOn:
-          type:
-          - string
-          - 'null'
-          description: Date when status of the payment deduction has changed to Processed.
-          format: date-time
-        paymentReference:
-          type: string
-          description: Human readable reference of the payment deduction.
     createPaymentDeductionRequest:
       type: object
       properties:
@@ -256,6 +210,52 @@ components:
           type: string
           description: The ISO 4217 currency of the order
       description: The payment deduction amount.
+    createPaymentDeductionResponse:
+      type: object
+      properties:
+        buyer:
+          $ref: '#/components/schemas/paymentDeductionBuyer'
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the payment deduction assigned by Kriya. It can be used to retrieve the payment deduction details using the Kriya Payments API Get endpoint.
+        type:
+          enum:
+          - CreditNote
+          - Dispute
+          - DirectPayment
+          type: string
+          description: Reason to create payment deduction.
+        invoiceReferenceNumber:
+          type:
+          - string
+          - 'null'
+          description: Invoice reference number.
+        processType:
+          enum:
+          - AdvanceDeduction
+          type: string
+          description: The method of settling payment deduction.
+        payment:
+          $ref: '#/components/schemas/monetaryValue'
+        status:
+          enum:
+          - Applied
+          - Processed
+          type: string
+          description: The settlement status of the payment deduction. Applied means Kriya has not received the full deduction amount from the merchant. Processed means Kriya has received the full deduction amount.
+        createdOn:
+          type: string
+          description: Date when the payment deduction has been applied.
+          format: date-time
+        processedOn:
+          type:
+          - string
+          - 'null'
+          description: Date when status of the payment deduction has changed to Processed.
+          format: date-time
+        paymentReference:
+          type: string
+          description: Human readable reference of the payment deduction.
     paymentDeductionBuyer:
       type: object
       properties:
