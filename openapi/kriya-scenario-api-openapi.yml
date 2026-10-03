@@ -64,6 +64,13 @@ components:
           type: string
         message:
           type: string
+    iError:
+      type: object
+      properties:
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/iError'
     problemDetails:
       type: object
       properties:
@@ -160,13 +167,6 @@ components:
           type: integer
           format: int32
           default: 100
-    iError:
-      type: object
-      properties:
-        reasons:
-          type: array
-          items:
-            $ref: '#/components/schemas/iError'
     updateOnboardingStatusScenarioCommand:
       type: object
       properties:

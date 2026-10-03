@@ -66,26 +66,42 @@ paths:
                 $ref: '#/components/schemas/problemDetails'
 components:
   schemas:
-    onboardingJourney:
+    createOnboardingJourneyRequest:
       type: object
       properties:
-        completeUrl:
-          type: string
-          description: The URL that the Onboarding Journey will redirect to if the director completes the journey.
-        ineligibleUrl:
+        merchantCompanyIdentifier:
           type:
           - string
           - 'null'
-          description: The URL that the Onboarding Journey will redirect to if the company doesn't pass eligibility check.
-        abandonedUrl:
-          type: string
-          description: The URL that the Onboarding Journey will redirect to if the director decides to leave the journey.
-        inReviewUrl:
+          description: The unique internal identifier of the company for Merchant.
+        kriyaCompanyIdentifier:
           type:
           - string
           - 'null'
-          description: The URL that the Onboarding Journey will redirect to if the company doesn't pass automatic eligibility check and requires manual review.
-      description: Onboarding Journey information that is required for successful flow.
+          description: The unique identifier of the company in Kriya.
+          format: uuid
+        nationalId:
+          type:
+          - string
+          - 'null'
+          description: The national identifier. Right now we support only Company Registration Numbers for GB.
+        onboardingJourney:
+          $ref: '#/components/schemas/onboardingJourney'
+        companyType:
+          type:
+          - string
+          - 'null'
+          description: Type of the company.
+        requesterEmail:
+          type:
+          - string
+          - 'null'
+          description: The email of the user initiating the onboarding journey.
+        requesterPhoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number of the user initiating the onboarding journey.
     iError:
       type: object
       properties:
@@ -93,6 +109,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/iError'
+    createOnboardingJourneyResponse:
+      type: object
+      properties:
+        onboardingRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: The URL to the created Onboarding Journey.
     problemDetailsError:
       type: object
       properties:
@@ -196,47 +220,23 @@ components:
           type: integer
           format: int32
           default: 100
-    createOnboardingJourneyRequest:
+    onboardingJourney:
       type: object
       properties:
-        merchantCompanyIdentifier:
+        completeUrl:
+          type: string
+          description: The URL that the Onboarding Journey will redirect to if the director completes the journey.
+        ineligibleUrl:
           type:
           - string
           - 'null'
-          description: The unique internal identifier of the company for Merchant.
-        kriyaCompanyIdentifier:
+          description: The URL that the Onboarding Journey will redirect to if the company doesn't pass eligibility check.
+        abandonedUrl:
+          type: string
+          description: The URL that the Onboarding Journey will redirect to if the director decides to leave the journey.
+        inReviewUrl:
           type:
           - string
           - 'null'
-          description: The unique identifier of the company in Kriya.
-          format: uuid
-        nationalId:
-          type:
-          - string
-          - 'null'
-          description: The national identifier. Right now we support only Company Registration Numbers for GB.
-        onboardingJourney:
-          $ref: '#/components/schemas/onboardingJourney'
-        companyType:
-          type:
-          - string
-          - 'null'
-          description: Type of the company.
-        requesterEmail:
-          type:
-          - string
-          - 'null'
-          description: The email of the user initiating the onboarding journey.
-        requesterPhoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The phone number of the user initiating the onboarding journey.
-    createOnboardingJourneyResponse:
-      type: object
-      properties:
-        onboardingRedirectUrl:
-          type:
-          - string
-          - 'null'
-          description: The URL to the created Onboarding Journey.
+          description: The URL that the Onboarding Journey will redirect to if the company doesn't pass automatic eligibility check and requires manual review.
+      description: Onboarding Journey information that is required for successful flow.

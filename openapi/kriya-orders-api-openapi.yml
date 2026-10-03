@@ -361,6 +361,211 @@ paths:
                 $ref: '#/components/schemas/problemDetails'
 components:
   schemas:
+    repaymentData:
+      required:
+      - repaymentDate
+      - repaymentAmount
+      type:
+      - object
+      - 'null'
+      properties:
+        repaymentDate:
+          type: string
+          description: Repayment date for the order
+          format: date-time
+        repaymentAmount:
+          $ref: '#/components/schemas/repaymentMonetaryValue'
+      description: The repayment details if the order is transitioned to repaid status
+    updateOrderResponse:
+      type: object
+      properties:
+        paymentJourneyRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: The unique redirect url to provide to a buyer to pass them through the payments journey.
+        paymentMethods:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/paymentOptions'
+          description: The payment methods associated with the buyer.
+        totalLimit:
+          type:
+          - integer
+          - 'null'
+          description: The total limit given to the buyer, if approved.
+          format: int64
+        availableLimit:
+          type:
+          - integer
+          - 'null'
+          description: The available limit remaining for the buyer.
+          format: int64
+        selectedPaymentMethod:
+          type:
+          - string
+          - 'null'
+          description: The payment method to be used by the buyer for the order.
+    mfaRecipientDestination:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: Destination of a Mfa request (e.g. the specific phone number).
+        type:
+          type: string
+          description: The type of destination (e.g. SMS).
+    buyerDetails:
+      type:
+      - object
+      - 'null'
+      properties:
+        companyRegistrationNumber:
+          type: string
+        companyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        type:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type:
+          - string
+          - 'null'
+          description: The associated business type of the company.
+        countryOfRegistration:
+          type:
+          - string
+          - 'null'
+          description: The ISO-3166 alpha-2 country code.
+        director:
+          $ref: '#/components/schemas/directorDetails'
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the company in Kriya.
+          format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the company for the Merchant.
+      description: The company making a purchase on the partner platform.
+    paymentData:
+      required:
+      - amount
+      type:
+      - object
+      - 'null'
+      properties:
+        amount:
+          type: integer
+          description: Providers charge for the order, excluding fees, in their lowest denomination
+          format: int64
+        currency:
+          enum:
+          - GBP
+          - EUR
+          - USD
+          type:
+          - string
+          - 'null'
+          description: The ISO 4217 currency of the order
+      description: Payment Details of the supplier providing the goods.
+    getOrderResponse:
+      type: object
+      properties:
+        paymentJourney:
+          $ref: '#/components/schemas/paymentJourney'
+        merchantOrderId:
+          type: string
+          description: The unique identifier of the order on the partner platform.
+        status:
+          type:
+          - string
+          - 'null'
+          description: Current status of the order.
+        buyerCompany:
+          $ref: '#/components/schemas/buyerCompanyDetails'
+        supplierCompany:
+          $ref: '#/components/schemas/supplierCompanyDetails'
+        user:
+          $ref: '#/components/schemas/user'
+        payment:
+          $ref: '#/components/schemas/orderPaymentInfo'
+        deliveryAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/address'
+          description: The addresses the goods are to be delivered to.
+        deliveryDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the goods within the order were delivered to the buyer.
+          format: date-time
+        invoiceReference:
+          type:
+          - string
+          - 'null'
+          description: The InvoiceReference number from the MarketPlace associated with one or many orders. This can be used to group a set of Orders create against a single Invoice.
+        paymentReference:
+          type:
+          - string
+          - 'null'
+          description: The PaymentReference associated to the order. The same can be associated with one or many orders. This can help in the reconciliation process.
+        orderPlacedDate:
+          type:
+          - string
+          - 'null'
+          description: The date the order was placed on the partner platform.
+          format: date-time
+    getOrderMfaSessionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the mfa session.
+          format: uuid
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/mfaRecipient'
+          description: List of Mfa request recipients.
+        state:
+          enum:
+          - 0
+          - 1
+          - 2
+          type: integer
+          description: Session's state.
+          format: int32
+        description:
+          type: string
+          description: Description that contains additional information about session state
+    getManyOrdersRequest:
+      type: object
+      properties:
+        invoiceReferences:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: The list of invoice references to search.
+        pageSize:
+          type:
+          - integer
+          - 'null'
+          description: 'The maximum number of items to return. Min: 1 Max: 1000'
+          format: int32
     directorDetails:
       type:
       - object
@@ -396,6 +601,128 @@ components:
         residentialAddress:
           $ref: '#/components/schemas/address'
       description: Company director details.
+    updateOrderRequest:
+      type: object
+      properties:
+        buyerCompany:
+          $ref: '#/components/schemas/buyerCompanyDetails'
+        supplierCompany:
+          $ref: '#/components/schemas/supplierCompanyDetails'
+        payment:
+          $ref: '#/components/schemas/orderPaymentInfo'
+        deliveryAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/address'
+          description: The addresses the goods are to be delivered to.
+        paymentJourney:
+          $ref: '#/components/schemas/paymentJourney'
+        user:
+          $ref: '#/components/schemas/user'
+        deliveryDate:
+          type:
+          - string
+          - 'null'
+          description: The date that the goods within the order were delivered to the buyer.
+          format: date-time
+        invoiceReference:
+          type:
+          - string
+          - 'null'
+          description: The InvoiceReference number from the Merchant associated with one or many orders. This can be used to group a set of Orders create against a single Invoice.
+        ipAddress:
+          maxLength: 45
+          type:
+          - string
+          - 'null'
+          description: Buyer IP Address
+    uploadDeliveryConfirmationResponse:
+      type: object
+      properties:
+        uploadedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/uploadedDeliveryConfirmationFile'
+        notesCount:
+          type: integer
+          format: int32
+    paymentJourney:
+      required:
+      - paymentAcceptedRedirectUrl
+      - paymentDeclinedRedirectUrl
+      type:
+      - object
+      - 'null'
+      properties:
+        paymentAcceptedRedirectUrl:
+          type: string
+          description: Link user is redirected to after completing payment journey.
+        paymentDeclinedRedirectUrl:
+          type: string
+          description: Link user is redirected to after declining payment journey.
+        paymentCancelledRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: Link user is redirected to after cancelling payment journey.
+        declineStatus:
+          enum:
+          - Started
+          - Completed
+          - Expired
+          - Ineligible
+          - InReview
+          - InsufficientFunds
+          - Eligible
+          - UnverifiedSoleTrader
+          - EligibilityCheckIsRequired
+          - OnboardingIsRequired
+          - MfaSessionInProgress
+          - MfaSessionExpired
+          - MfaSessionRejected
+          - MfaNotSupported
+          - MfaSessionApproved
+          - InsufficientFundsOther
+          - InsufficientFundsOnboardingChecksAreRequired
+          - OnboardingChecksAreRequired
+          - OnboardingChecksAreFailed
+          - Blocked
+          type: string
+          description: Status describing the reason for declined order
+        autoTransitionOnCompletion:
+          enum:
+          - Draft
+          - AwaitingPrepayment
+          - Submitted
+          - ReadyToAdvance
+          - Advanced
+          - Repaid
+          - Overdue
+          - Closed
+          - Cancelled
+          type: string
+          description: 'Defines an order status that will be set after payment journey is completed. Can have one of the following values: Submitted or ReadyToAdvance'
+      description: Payment journey details for if you're choosing to use our hosted web app.
+    transitionOrderStatusRequest:
+      type: object
+      properties:
+        newStatus:
+          enum:
+          - Draft
+          - AwaitingPrepayment
+          - Submitted
+          - ReadyToAdvance
+          - Advanced
+          - Repaid
+          - Overdue
+          - Closed
+          - Cancelled
+          type: string
+          description: The status to transition the order to.
+        repayment:
+          $ref: '#/components/schemas/repaymentData'
     createOrderRequest:
       required:
       - merchantOrderId
@@ -459,45 +786,6 @@ components:
           - 'null'
           description: The date the order was placed on the partner platform.
           format: date-time
-    getManyOrdersRequest:
-      type: object
-      properties:
-        invoiceReferences:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: The list of invoice references to search.
-        pageSize:
-          type:
-          - integer
-          - 'null'
-          description: 'The maximum number of items to return. Min: 1 Max: 1000'
-          format: int32
-    paymentOptions:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the payment option.
-        isEnabled:
-          type: boolean
-          description: The flag to determine if the buyer can use this payment option.
-        reason:
-          type: string
-          description: The reason a payment option has been disabled.
-        marketPayFee:
-          type: integer
-          description: The associated fee for the payment option that is payable by the buyer.
-          format: int64
-        totalAmount:
-          type: integer
-          description: The total amount of the order, including the Kriya fees.
-          format: int64
-        identifier:
-          type: string
-          description: Payment method identifier.
     repaymentMonetaryValue:
       required:
       - amount
@@ -516,43 +804,23 @@ components:
           type: string
           description: The ISO 4217 currency of the order
       description: Repayment amount and currency for the order
-    uploadDeliveryConfirmationResponse:
+    getManyOrdersResponse:
       type: object
       properties:
-        uploadedFiles:
+        orders:
           type: array
           items:
-            $ref: '#/components/schemas/uploadedDeliveryConfirmationFile'
-        notesCount:
+            $ref: '#/components/schemas/baseOrder'
+          description: Collection of orders that fits the search criteria.
+        totalCount:
           type: integer
+          description: The total number of orders that fits the search criteria.
           format: int32
-    user:
-      type:
-      - object
-      - 'null'
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-          description: Email of the user.
-        fullName:
-          type:
-          - string
-          - 'null'
-          description: First and Last Name of the user.
-        role:
-          type:
-          - string
-          - 'null'
-          description: User role in the company.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: User phone number.
-      description: Details of the user creating the order.
-    supplierCompanyDetails:
+        pageSize:
+          type: integer
+          description: Number of order fitting each page.
+          format: int32
+    buyerCompanyDetails:
       type:
       - object
       - 'null'
@@ -561,17 +829,29 @@ components:
           type:
           - string
           - 'null'
-          description: The legal name of the company
+          description: The legal name of the company.
+        companyRegistrationNumber:
+          type: string
         companyIdentifier:
           type:
           - string
           - 'null'
-          description: The identifier for the company, i.e. registration number only.
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        type:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type:
+          - string
+          - 'null'
+          description: The associated business type of the company.
         countryOfRegistration:
           type:
           - string
           - 'null'
-          description: The ISO-3166 alpha-2 country code
+          description: The ISO-3166 alpha-2 country code.
+        director:
+          $ref: '#/components/schemas/directorDetails'
         kriyaCompanyIdentifier:
           type:
           - string
@@ -583,64 +863,7 @@ components:
           - string
           - 'null'
           description: Unique identifier of the company for the Merchant.
-      description: The company providing the goods to the buyer. This is only required if the partner themselves are not fulfilling the order. Once a supplier has been set, it cannot be reverted.
-    paymentJourney:
-      required:
-      - paymentAcceptedRedirectUrl
-      - paymentDeclinedRedirectUrl
-      type:
-      - object
-      - 'null'
-      properties:
-        paymentAcceptedRedirectUrl:
-          type: string
-          description: Link user is redirected to after completing payment journey.
-        paymentDeclinedRedirectUrl:
-          type: string
-          description: Link user is redirected to after declining payment journey.
-        paymentCancelledRedirectUrl:
-          type:
-          - string
-          - 'null'
-          description: Link user is redirected to after cancelling payment journey.
-        declineStatus:
-          enum:
-          - Started
-          - Completed
-          - Expired
-          - Ineligible
-          - InReview
-          - InsufficientFunds
-          - Eligible
-          - UnverifiedSoleTrader
-          - EligibilityCheckIsRequired
-          - OnboardingIsRequired
-          - MfaSessionInProgress
-          - MfaSessionExpired
-          - MfaSessionRejected
-          - MfaNotSupported
-          - MfaSessionApproved
-          - InsufficientFundsOther
-          - InsufficientFundsOnboardingChecksAreRequired
-          - OnboardingChecksAreRequired
-          - OnboardingChecksAreFailed
-          - Blocked
-          type: string
-          description: Status describing the reason for declined order
-        autoTransitionOnCompletion:
-          enum:
-          - Draft
-          - AwaitingPrepayment
-          - Submitted
-          - ReadyToAdvance
-          - Advanced
-          - Repaid
-          - Overdue
-          - Closed
-          - Cancelled
-          type: string
-          description: 'Defines an order status that will be set after payment journey is completed. Can have one of the following values: Submitted or ReadyToAdvance'
-      description: Payment journey details for if you're choosing to use our hosted web app.
+      description: The company making a purchase on the partner platform.
     address:
       type: object
       properties:
@@ -675,56 +898,63 @@ components:
           - 'null'
           description: Country.
       description: Director residential address.
-    getOrderResponse:
+    uploadedDeliveryConfirmationFile:
       type: object
       properties:
-        paymentJourney:
-          $ref: '#/components/schemas/paymentJourney'
-        merchantOrderId:
+        fileId:
           type: string
-          description: The unique identifier of the order on the partner platform.
-        status:
+          format: uuid
+        fileName:
+          type: string
+    user:
+      type:
+      - object
+      - 'null'
+      properties:
+        email:
           type:
           - string
           - 'null'
-          description: Current status of the order.
-        buyerCompany:
-          $ref: '#/components/schemas/buyerCompanyDetails'
-        supplierCompany:
-          $ref: '#/components/schemas/supplierCompanyDetails'
-        user:
-          $ref: '#/components/schemas/user'
-        payment:
-          $ref: '#/components/schemas/orderPaymentInfo'
-        deliveryAddresses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/address'
-          description: The addresses the goods are to be delivered to.
-        deliveryDate:
+          description: Email of the user.
+        fullName:
           type:
           - string
           - 'null'
-          description: The date that the goods within the order were delivered to the buyer.
-          format: date-time
-        invoiceReference:
+          description: First and Last Name of the user.
+        role:
           type:
           - string
           - 'null'
-          description: The InvoiceReference number from the MarketPlace associated with one or many orders. This can be used to group a set of Orders create against a single Invoice.
-        paymentReference:
+          description: User role in the company.
+        phoneNumber:
           type:
           - string
           - 'null'
-          description: The PaymentReference associated to the order. The same can be associated with one or many orders. This can help in the reconciliation process.
-        orderPlacedDate:
-          type:
-          - string
-          - 'null'
-          description: The date the order was placed on the partner platform.
-          format: date-time
+          description: User phone number.
+      description: Details of the user creating the order.
+    paymentOptions:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the payment option.
+        isEnabled:
+          type: boolean
+          description: The flag to determine if the buyer can use this payment option.
+        reason:
+          type: string
+          description: The reason a payment option has been disabled.
+        marketPayFee:
+          type: integer
+          description: The associated fee for the payment option that is payable by the buyer.
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of the order, including the Kriya fees.
+          format: int64
+        identifier:
+          type: string
+          description: Payment method identifier.
     baseOrder:
       type: object
       properties:
@@ -773,68 +1003,45 @@ components:
           - 'null'
           description: The date the order was placed on the partner platform.
           format: date-time
-    transitionOrderStatusRequest:
+    problemDetails:
       type: object
       properties:
-        newStatus:
-          enum:
-          - Draft
-          - AwaitingPrepayment
-          - Submitted
-          - ReadyToAdvance
-          - Advanced
-          - Repaid
-          - Overdue
-          - Closed
-          - Cancelled
+        title:
           type: string
-          description: The status to transition the order to.
-        repayment:
-          $ref: '#/components/schemas/repaymentData'
-    buyerCompanyDetails:
-      type:
-      - object
-      - 'null'
+          description: The high level message returned for an non-success response.
+        message:
+          type: string
+          description: A description of the issue.
+        errors:
+          type: array
+          items:
+            type: string
+          description: The individual errors that caused the non-success response.
+        date:
+          type: string
+          description: The date and time at which the errors occured.
+          format: date-time
+        operationId:
+          type: string
+          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
+    mfaRecipient:
+      type: object
       properties:
-        companyName:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the company.
-        companyRegistrationNumber:
+        name:
           type: string
-        companyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        type:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type:
-          - string
-          - 'null'
-          description: The associated business type of the company.
-        countryOfRegistration:
-          type:
-          - string
-          - 'null'
-          description: The ISO-3166 alpha-2 country code.
-        director:
-          $ref: '#/components/schemas/directorDetails'
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company in Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company for the Merchant.
-      description: The company making a purchase on the partner platform.
+          description: Name of a Mfa request recipient.
+        destination:
+          type: string
+          description: Destination (phone number) of a Mfa request.
+          deprecated: true
+        state:
+          type: string
+          description: Recipient's state.
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/mfaRecipientDestination'
+          description: The list of destinations where the recipient will receive the confirmation code
     createOrderResponse:
       type: object
       properties:
@@ -862,102 +1069,6 @@ components:
           - 'null'
           description: The available limit remaining for the buyer.
           format: int64
-    repaymentData:
-      required:
-      - repaymentDate
-      - repaymentAmount
-      type:
-      - object
-      - 'null'
-      properties:
-        repaymentDate:
-          type: string
-          description: Repayment date for the order
-          format: date-time
-        repaymentAmount:
-          $ref: '#/components/schemas/repaymentMonetaryValue'
-      description: The repayment details if the order is transitioned to repaid status
-    buyerDetails:
-      type:
-      - object
-      - 'null'
-      properties:
-        companyRegistrationNumber:
-          type: string
-        companyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        type:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type:
-          - string
-          - 'null'
-          description: The associated business type of the company.
-        countryOfRegistration:
-          type:
-          - string
-          - 'null'
-          description: The ISO-3166 alpha-2 country code.
-        director:
-          $ref: '#/components/schemas/directorDetails'
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company in Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company for the Merchant.
-      description: The company making a purchase on the partner platform.
-    problemDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The high level message returned for an non-success response.
-        message:
-          type: string
-          description: A description of the issue.
-        errors:
-          type: array
-          items:
-            type: string
-          description: The individual errors that caused the non-success response.
-        date:
-          type: string
-          description: The date and time at which the errors occured.
-          format: date-time
-        operationId:
-          type: string
-          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
-    paymentData:
-      required:
-      - amount
-      type:
-      - object
-      - 'null'
-      properties:
-        amount:
-          type: integer
-          description: Providers charge for the order, excluding fees, in their lowest denomination
-          format: int64
-        currency:
-          enum:
-          - GBP
-          - EUR
-          - USD
-          type:
-          - string
-          - 'null'
-          description: The ISO 4217 currency of the order
-      description: Payment Details of the supplier providing the goods.
     orderPaymentInfo:
       type:
       - object
@@ -975,146 +1086,35 @@ components:
           - 'null'
           description: The payment method to be used for the order.
       description: The details of the payments, including the type of payment terms and the gross amount.
-    getOrderMfaSessionResponse:
-      type: object
+    supplierCompanyDetails:
+      type:
+      - object
+      - 'null'
       properties:
-        id:
-          type: string
-          description: The unique identifier of the mfa session.
+        companyName:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the company
+        companyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: The identifier for the company, i.e. registration number only.
+        countryOfRegistration:
+          type:
+          - string
+          - 'null'
+          description: The ISO-3166 alpha-2 country code
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the company in Kriya.
           format: uuid
-        recipients:
-          type: array
-          items:
-            $ref: '#/components/schemas/mfaRecipient'
-          description: List of Mfa request recipients.
-        state:
-          enum:
-          - 0
-          - 1
-          - 2
-          type: integer
-          description: Session's state.
-          format: int32
-        description:
-          type: string
-          description: Description that contains additional information about session state
-    mfaRecipient:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of a Mfa request recipient.
-        destination:
-          type: string
-          description: Destination (phone number) of a Mfa request.
-          deprecated: true
-        state:
-          type: string
-          description: Recipient's state.
-        destinations:
-          type: array
-          items:
-            $ref: '#/components/schemas/mfaRecipientDestination'
-          description: The list of destinations where the recipient will receive the confirmation code
-    updateOrderResponse:
-      type: object
-      properties:
-        paymentJourneyRedirectUrl:
+        merchantCompanyIdentifier:
           type:
           - string
           - 'null'
-          description: The unique redirect url to provide to a buyer to pass them through the payments journey.
-        paymentMethods:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/paymentOptions'
-          description: The payment methods associated with the buyer.
-        totalLimit:
-          type:
-          - integer
-          - 'null'
-          description: The total limit given to the buyer, if approved.
-          format: int64
-        availableLimit:
-          type:
-          - integer
-          - 'null'
-          description: The available limit remaining for the buyer.
-          format: int64
-        selectedPaymentMethod:
-          type:
-          - string
-          - 'null'
-          description: The payment method to be used by the buyer for the order.
-    getManyOrdersResponse:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/baseOrder'
-          description: Collection of orders that fits the search criteria.
-        totalCount:
-          type: integer
-          description: The total number of orders that fits the search criteria.
-          format: int32
-        pageSize:
-          type: integer
-          description: Number of order fitting each page.
-          format: int32
-    uploadedDeliveryConfirmationFile:
-      type: object
-      properties:
-        fileId:
-          type: string
-          format: uuid
-        fileName:
-          type: string
-    mfaRecipientDestination:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: Destination of a Mfa request (e.g. the specific phone number).
-        type:
-          type: string
-          description: The type of destination (e.g. SMS).
-    updateOrderRequest:
-      type: object
-      properties:
-        buyerCompany:
-          $ref: '#/components/schemas/buyerCompanyDetails'
-        supplierCompany:
-          $ref: '#/components/schemas/supplierCompanyDetails'
-        payment:
-          $ref: '#/components/schemas/orderPaymentInfo'
-        deliveryAddresses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/address'
-          description: The addresses the goods are to be delivered to.
-        paymentJourney:
-          $ref: '#/components/schemas/paymentJourney'
-        user:
-          $ref: '#/components/schemas/user'
-        deliveryDate:
-          type:
-          - string
-          - 'null'
-          description: The date that the goods within the order were delivered to the buyer.
-          format: date-time
-        invoiceReference:
-          type:
-          - string
-          - 'null'
-          description: The InvoiceReference number from the Merchant associated with one or many orders. This can be used to group a set of Orders create against a single Invoice.
-        ipAddress:
-          maxLength: 45
-          type:
-          - string
-          - 'null'
-          description: Buyer IP Address
+          description: Unique identifier of the company for the Merchant.
+      description: The company providing the goods to the buyer. This is only required if the partner themselves are not fulfilling the order. Once a supplier has been set, it cannot be reverted.
