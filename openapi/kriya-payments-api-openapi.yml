@@ -149,6 +149,45 @@ paths:
                 $ref: '#/components/schemas/problemDetails'
 components:
   schemas:
+    problemDetails:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The high level message returned for an non-success response.
+        message:
+          type: string
+          description: A description of the issue.
+        errors:
+          type: array
+          items:
+            type: string
+          description: The individual errors that caused the non-success response.
+        date:
+          type: string
+          description: The date and time at which the errors occured.
+          format: date-time
+        operationId:
+          type: string
+          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
+    monetaryValue:
+      required:
+      - amount
+      - currency
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The total value adjustment registered on the invoice level.
+          format: int64
+        currency:
+          enum:
+          - GBP
+          - EUR
+          - USD
+          type: string
+          description: The ISO 4217 currency of the order
+      description: The payment deduction amount.
     paymentDeductionBuyer:
       type: object
       properties:
@@ -209,27 +248,6 @@ components:
         paymentReference:
           type: string
           description: Human readable reference of the payment deduction.
-    problemDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The high level message returned for an non-success response.
-        message:
-          type: string
-          description: A description of the issue.
-        errors:
-          type: array
-          items:
-            type: string
-          description: The individual errors that caused the non-success response.
-        date:
-          type: string
-          description: The date and time at which the errors occured.
-          format: date-time
-        operationId:
-          type: string
-          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
     createPaymentDeductionRequest:
       type: object
       properties:
@@ -319,21 +337,3 @@ components:
         paymentReference:
           type: string
           description: Human readable reference of the payment deduction.
-    monetaryValue:
-      required:
-      - amount
-      - currency
-      type: object
-      properties:
-        amount:
-          type: integer
-          description: The total value adjustment registered on the invoice level.
-          format: int64
-        currency:
-          enum:
-          - GBP
-          - EUR
-          - USD
-          type: string
-          description: The ISO 4217 currency of the order
-      description: The payment deduction amount.

@@ -218,13 +218,99 @@ paths:
           description: No description
 components:
   schemas:
-    createBuyerResponse:
+    problemDetails:
       type: object
       properties:
-        kriyaCompanyId:
+        title:
           type: string
-          description: The unique Kriya identifier of the created company.
+          description: The high level message returned for an non-success response.
+        message:
+          type: string
+          description: A description of the issue.
+        errors:
+          type: array
+          items:
+            type: string
+          description: The individual errors that caused the non-success response.
+        date:
+          type: string
+          description: The date and time at which the errors occured.
+          format: date-time
+        operationId:
+          type: string
+          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
+    updateBuyerContactDetailsRequest:
+      type: object
+      properties:
+        companyIdentifier:
+          type: string
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        companyCountryCode:
+          type:
+          - string
+          - 'null'
+          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
+        companyType:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type:
+          - string
+          - 'null'
+          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by Kriya.
           format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by the Merchant.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Full name of the primary contact for the buyer.
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email address of the primary contact for the buyer.
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role of the primary contact for the buyer.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Phone number of the primary contact for the buyer. This is not limited to UK phone numbers.
+    buyerPricingScheme:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The unique identifier of the payment option
+        name:
+          type: string
+          description: The name of the payment option.
+        description:
+          type: string
+          description: The description of the payment option.
+        isEnabled:
+          type: boolean
+          description: The flag to determine if the buyer can use this payment option.
+        feePercentage:
+          type: number
+          description: The associated fee percentage for the payment option that is payable by the buyer.
+          format: double
+        isPayNowEnabled:
+          type: boolean
+          description: The flag to determine if the pay now option is enabled for the payment option.
     companySearchRequest:
       type: object
       properties:
@@ -243,6 +329,112 @@ components:
           - string
           - 'null'
           format: uuid
+    updateBuyerScenarioRequest:
+      type: object
+      properties:
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by Kriya.
+          format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by the Merchant.
+        companyIdentifier:
+          type: string
+          description: Company identifier for the buyer, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        companyCountryCode:
+          type:
+          - string
+          - 'null'
+          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
+        companyType:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type:
+          - string
+          - 'null'
+          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
+        status:
+          enum:
+          - Unknown
+          - Submitted
+          - InReview
+          - Approved
+          - Rejected
+          - OnHold
+          type: string
+          description: The risk decision status for the buyer to be transitioned to.
+        limit:
+          type:
+          - integer
+          - 'null'
+          description: The new limit for the buyer to be given.
+          format: int64
+    address:
+      type: object
+      properties:
+        addressLine1:
+          type:
+          - string
+          - 'null'
+          description: First line of the address.
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Second line of the address.
+        city:
+          type:
+          - string
+          - 'null'
+          description: Name of the city.
+        region:
+          type:
+          - string
+          - 'null'
+          description: Name of the Region.
+        postCode:
+          type:
+          - string
+          - 'null'
+          description: Postcode.
+        country:
+          type:
+          - string
+          - 'null'
+          description: Country.
+      description: Director residential address.
+    getSingleBuyerRequest:
+      type: object
+      properties:
+        companyIdentifier:
+          type: string
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        countryCode:
+          type: string
+          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
+        type:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type: string
+          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by Kriya.
+          format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by the Merchant.
     getBuyerResponse:
       type: object
       properties:
@@ -306,6 +498,94 @@ components:
           items:
             type: string
           description: Reasons provided for a Buyers risk decision outcome of 'Rejected'.
+    createBuyerResponse:
+      type: object
+      properties:
+        kriyaCompanyId:
+          type: string
+          description: The unique Kriya identifier of the created company.
+          format: uuid
+    createBuyerRequest:
+      type: object
+      properties:
+        companyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
+        type:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type:
+          - string
+          - 'null'
+          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
+        contactDetails:
+          $ref: '#/components/schemas/buyerContactDetails'
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the company in Kriya.
+          format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the company for the Merchant.
+    getSingleBuyerPricingSchemeRequest:
+      type: object
+      properties:
+        companyIdentifier:
+          type: string
+          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
+        countryCode:
+          type: string
+          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
+        type:
+          enum:
+          - LimitedCompany
+          - SoleTrader
+          type: string
+          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
+        kriyaCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by Kriya.
+          format: uuid
+        merchantCompanyIdentifier:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for a company assigned by the Merchant.
+    buyerContactDetails:
+      type:
+      - object
+      - 'null'
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Full name of the primary contact for the buyer.
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email address of the primary contact for the buyer.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Phone number of the primary contact for the buyer, including the country calling code.
+      description: Primary contact details of the company.
     directorDetails:
       type:
       - object
@@ -341,283 +621,3 @@ components:
         residentialAddress:
           $ref: '#/components/schemas/address'
       description: Company director details.
-    updateBuyerScenarioRequest:
-      type: object
-      properties:
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by the Merchant.
-        companyIdentifier:
-          type: string
-          description: Company identifier for the buyer, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        companyCountryCode:
-          type:
-          - string
-          - 'null'
-          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
-        companyType:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type:
-          - string
-          - 'null'
-          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
-        status:
-          enum:
-          - Unknown
-          - Submitted
-          - InReview
-          - Approved
-          - Rejected
-          - OnHold
-          type: string
-          description: The risk decision status for the buyer to be transitioned to.
-        limit:
-          type:
-          - integer
-          - 'null'
-          description: The new limit for the buyer to be given.
-          format: int64
-    getSingleBuyerPricingSchemeRequest:
-      type: object
-      properties:
-        companyIdentifier:
-          type: string
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        countryCode:
-          type: string
-          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
-        type:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type: string
-          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by the Merchant.
-    updateBuyerContactDetailsRequest:
-      type: object
-      properties:
-        companyIdentifier:
-          type: string
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        companyCountryCode:
-          type:
-          - string
-          - 'null'
-          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
-        companyType:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type:
-          - string
-          - 'null'
-          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by the Merchant.
-        name:
-          type:
-          - string
-          - 'null'
-          description: Full name of the primary contact for the buyer.
-        email:
-          type:
-          - string
-          - 'null'
-          description: Email address of the primary contact for the buyer.
-        role:
-          type:
-          - string
-          - 'null'
-          description: Role of the primary contact for the buyer.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: Phone number of the primary contact for the buyer. This is not limited to UK phone numbers.
-    createBuyerRequest:
-      type: object
-      properties:
-        companyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        countryCode:
-          type:
-          - string
-          - 'null'
-          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
-        type:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type:
-          - string
-          - 'null'
-          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
-        contactDetails:
-          $ref: '#/components/schemas/buyerContactDetails'
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company in Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the company for the Merchant.
-    buyerPricingScheme:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The unique identifier of the payment option
-        name:
-          type: string
-          description: The name of the payment option.
-        description:
-          type: string
-          description: The description of the payment option.
-        isEnabled:
-          type: boolean
-          description: The flag to determine if the buyer can use this payment option.
-        feePercentage:
-          type: number
-          description: The associated fee percentage for the payment option that is payable by the buyer.
-          format: double
-        isPayNowEnabled:
-          type: boolean
-          description: The flag to determine if the pay now option is enabled for the payment option.
-    getSingleBuyerRequest:
-      type: object
-      properties:
-        companyIdentifier:
-          type: string
-          description: The identifier for the company, i.e. registration number for a Limited Company or the email address or phone number for a Sole Trader.
-        countryCode:
-          type: string
-          description: Country of Registration, The ISO-3166 alpha-2 country code. Defaults to 'GB' if not specified.
-        type:
-          enum:
-          - LimitedCompany
-          - SoleTrader
-          type: string
-          description: Business type of the company. Defaults to 'LimitedCompany' if not specified.
-        kriyaCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by Kriya.
-          format: uuid
-        merchantCompanyIdentifier:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for a company assigned by the Merchant.
-    problemDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The high level message returned for an non-success response.
-        message:
-          type: string
-          description: A description of the issue.
-        errors:
-          type: array
-          items:
-            type: string
-          description: The individual errors that caused the non-success response.
-        date:
-          type: string
-          description: The date and time at which the errors occured.
-          format: date-time
-        operationId:
-          type: string
-          description: The unique identifier for the operation where the error was caused. This will be of use and should be provided when requesting further support.
-    address:
-      type: object
-      properties:
-        addressLine1:
-          type:
-          - string
-          - 'null'
-          description: First line of the address.
-        addressLine2:
-          type:
-          - string
-          - 'null'
-          description: Second line of the address.
-        city:
-          type:
-          - string
-          - 'null'
-          description: Name of the city.
-        region:
-          type:
-          - string
-          - 'null'
-          description: Name of the Region.
-        postCode:
-          type:
-          - string
-          - 'null'
-          description: Postcode.
-        country:
-          type:
-          - string
-          - 'null'
-          description: Country.
-      description: Director residential address.
-    buyerContactDetails:
-      type:
-      - object
-      - 'null'
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: Full name of the primary contact for the buyer.
-        email:
-          type:
-          - string
-          - 'null'
-          description: Email address of the primary contact for the buyer.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: Phone number of the primary contact for the buyer, including the country calling code.
-      description: Primary contact details of the company.
