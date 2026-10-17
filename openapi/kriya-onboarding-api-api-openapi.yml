@@ -66,13 +66,6 @@ paths:
                 $ref: '#/components/schemas/problemDetails'
 components:
   schemas:
-    problemDetailsError:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     problemDetails:
       type: object
       properties:
@@ -169,13 +162,6 @@ components:
           type: integer
           format: int32
           default: 100
-    iError:
-      type: object
-      properties:
-        reasons:
-          type: array
-          items:
-            $ref: '#/components/schemas/iError'
     onboardingJourney:
       type: object
       properties:
@@ -196,6 +182,28 @@ components:
           - 'null'
           description: The URL that the Onboarding Journey will redirect to if the company doesn't pass automatic eligibility check and requires manual review.
       description: Onboarding Journey information that is required for successful flow.
+    problemDetailsError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    iError:
+      type: object
+      properties:
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/iError'
+    createOnboardingJourneyResponse:
+      type: object
+      properties:
+        onboardingRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: The URL to the created Onboarding Journey.
     createOnboardingJourneyRequest:
       type: object
       properties:
@@ -232,11 +240,3 @@ components:
           - string
           - 'null'
           description: The phone number of the user initiating the onboarding journey.
-    createOnboardingJourneyResponse:
-      type: object
-      properties:
-        onboardingRedirectUrl:
-          type:
-          - string
-          - 'null'
-          description: The URL to the created Onboarding Journey.

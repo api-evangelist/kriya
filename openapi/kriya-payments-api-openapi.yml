@@ -188,6 +188,49 @@ components:
           type: string
           description: The ISO 4217 currency of the order
       description: The payment deduction amount.
+    createPaymentDeductionRequest:
+      type: object
+      properties:
+        type:
+          enum:
+          - CreditNote
+          - DirectPayment
+          type: string
+          description: Reason to create payment deduction.
+        invoiceReferenceNumber:
+          type: string
+          description: 'InvoiceReference or MerchantOrderId.
+
+            If multiple orders have the same InvoiceReference, using InvoiceReference will reduce the balance of the oldest outstanding order. Use MerchantOrderId to reduce the balance of a specific order.'
+        processType:
+          enum:
+          - AdvanceDeduction
+          type: string
+          description: The method of settling payment deductions. AdvanceDeduction refers to Kriya deducting the amount from the next available advance funds.
+          default: AdvanceDeduction
+        payment:
+          $ref: '#/components/schemas/monetaryValue'
+        creditNoteNumber:
+          type:
+          - string
+          - 'null'
+          description: Credit note number. Mandatory if Type is CreditNote.
+        paymentType:
+          enum:
+          - None
+          - Bank
+          - Card
+          - Cheque
+          - Digital
+          type:
+          - string
+          - 'null'
+          description: Type of the payment. Mandatory if Type is DirectPayment.
+        uniqueKey:
+          type:
+          - string
+          - 'null'
+          description: This is an optional field to prevent the creation of duplicate payment deductions. If the UniqueKey already exists, the payment deduction will fail with a 409 error.
     paymentDeductionBuyer:
       type: object
       properties:
@@ -248,49 +291,6 @@ components:
         paymentReference:
           type: string
           description: Human readable reference of the payment deduction.
-    createPaymentDeductionRequest:
-      type: object
-      properties:
-        type:
-          enum:
-          - CreditNote
-          - DirectPayment
-          type: string
-          description: Reason to create payment deduction.
-        invoiceReferenceNumber:
-          type: string
-          description: 'InvoiceReference or MerchantOrderId.
-
-            If multiple orders have the same InvoiceReference, using InvoiceReference will reduce the balance of the oldest outstanding order. Use MerchantOrderId to reduce the balance of a specific order.'
-        processType:
-          enum:
-          - AdvanceDeduction
-          type: string
-          description: The method of settling payment deductions. AdvanceDeduction refers to Kriya deducting the amount from the next available advance funds.
-          default: AdvanceDeduction
-        payment:
-          $ref: '#/components/schemas/monetaryValue'
-        creditNoteNumber:
-          type:
-          - string
-          - 'null'
-          description: Credit note number. Mandatory if Type is CreditNote.
-        paymentType:
-          enum:
-          - None
-          - Bank
-          - Card
-          - Cheque
-          - Digital
-          type:
-          - string
-          - 'null'
-          description: Type of the payment. Mandatory if Type is DirectPayment.
-        uniqueKey:
-          type:
-          - string
-          - 'null'
-          description: This is an optional field to prevent the creation of duplicate payment deductions. If the UniqueKey already exists, the payment deduction will fail with a 409 error.
     createPaymentDeductionResponse:
       type: object
       properties:
