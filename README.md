@@ -64,63 +64,128 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kriya (Kriya Finance Limited, London) is a UK B2B embedded-finance and working-capital
-provider that lets merchants offer trade credit to their business buyers — Embedded
-PayLater, Invoice Finance, working capital loans, Buyer Authentication, Offline
-Payments and Kriya on Stripe. Kriya was acquired by Allica Bank in October 2025.
+Kriya (Kriya Finance Limited, London) is a UK B2B embedded-finance and working-capital provider that lets merchants offer trade credit to their business buyers. Its products span Embedded PayLater (B2B buy-now-pay-later terms at checkout), Invoice Finance, working capital loans, buyer authentication, offline payments and a Kriya-on-Stripe integration. Kriya publishes two partner-facing REST APIs — the Payments API for buyer registration, risk decisioning, order lifecycle and payment deductions, and the Onboarding API for automating company and KYC checks — alongside a hosted Payments Journey and Onboarding Journey web flow, HMAC-signed webhooks, a dedicated test environment with scenario simulators, and e-commerce plugins for BigCommerce, Magento, nopCommerce, PrestaShop and Salesforce. Kriya was acquired by Allica Bank in October 2025.
 
-Website: https://www.kriya.co — Developer docs: https://docs.kriya.co/
+**Areas:** Company · Fintech · Payments · Embedded Finance · Buy Now Pay Later · B2B Payments · Invoice Finance · Lending · Working Capital · Onboarding · KYC · United Kingdom
 
-Backed by: northzone
+## Kriya on APIs.io
 
-## APIs
+Everything profiled for Kriya is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kriya/](https://apis.io/providers/kriya/)** — or go straight to one of the APIs or properties below.
 
-| API | Docs | Base URL | Spec |
-|---|---|---|---|
-| Kriya Payments API | https://docs.kriya.co/payments | `https://api.kriya.co/payments/` | [openapi/kriya-payments-openapi.yaml](openapi/kriya-payments-openapi.yaml) |
-| Kriya Onboarding API | https://docs.kriya.co/onboarding | `https://api.kriya.co/onboarding/` | [openapi/kriya-onboarding-openapi.yaml](openapi/kriya-onboarding-openapi.yaml) |
+### APIs (6)
 
-Both OpenAPI 3.0.1 documents were harvested from `https://cdn.kriya.co/images/`,
-which backs the Redoc portal at docs.kriya.co. 20 operations, 49 schemas.
+- [Kriya Buyers API](https://apis.io/apis/kriya/kriya-buyers-api/) — The Buyers API from Kriya — 6 operation(s) for buyers.
+- [Kriya Onboarding API](https://apis.io/apis/kriya/kriya-onboarding-api-api/) — The Onboarding API API from Kriya — 2 operation(s) for onboarding api.
+- [Kriya OnboardingJourney API](https://apis.io/apis/kriya/kriya-onboardingjourney-api/) — The OnboardingJourney API from Kriya — 1 operation(s) for onboardingjourney.
+- [Kriya Orders API](https://apis.io/apis/kriya/kriya-orders-api/) — The Orders API from Kriya — 7 operation(s) for orders.
+- [Kriya Payments API](https://apis.io/apis/kriya/kriya-payments-api/) — The Payments API from Kriya — 3 operation(s) for payments.
+- [Kriya Scenario API](https://apis.io/apis/kriya/kriya-scenario-api/) — The Scenario API from Kriya — 1 operation(s) for scenario.
 
-## Artifacts
+### Published properties
 
-| Artifact | File | Method |
-|---|---|---|
-| Authentication | [authentication/](authentication/kriya-authentication.yml) | searched |
-| Conventions | [conventions/](conventions/kriya-conventions.yml) | searched |
-| Webhooks | [asyncapi/](asyncapi/kriya-payments-webhooks.yml) | searched |
-| Sandbox | [sandbox/](sandbox/kriya-sandbox.yml) | searched |
-| Embedded components | [components/](components/kriya-components.yml) | searched |
-| Decline codes | [errors/](errors/kriya-decline-codes.yml) | searched |
-| Error catalog | [errors/](errors/kriya-problem-types.yml) | derived |
-| Data model | [data-model/](data-model/kriya-data-model.yml) | derived |
-| Conformance | [conformance/](conformance/kriya-conformance.yml) | derived |
-| Lifecycle | [lifecycle/](lifecycle/kriya-lifecycle.yml) | searched |
-| Overlays | [overlays/](overlays/) | generated |
-| Agent skills | [skills/](skills/_index.yml) | generated |
-| llms.txt | [llms/](llms/kriya-llms.txt) | generated |
-| MCP (candidate) | [mcp/](mcp/kriya-mcp.yml) | derived |
-| Domain security | [security/](security/kriya-domain-security.yml) | probed |
-| Vulnerability disclosure | [security/](security/kriya-vulnerability-disclosure.yml) | searched |
-| Well-known (none found) | [well-known/](well-known/kriya-well-known.yml) | searched |
-| Packages (none found) | [packages/](packages/kriya-packages.yml) | searched |
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Integration notes
+#### AsyncAPI (1)
 
-- Auth is a static partner API key in the `X-Kriya-ApiKey` header. Neither spec
-  declares `securitySchemes` — the overlays add it.
-- No OAuth, no scopes, and **no idempotency contract**.
-- Rate limits: 2000 req / 5 min per key; company search 5 req/sec.
-- Errors use a `problemDetails` envelope that is **not** RFC 9457.
-- Four HMAC-signed webhook events (`X-Kriya-Signature`, HMAC-SHA256, base64), 3
-  retries with 2s/4s/8s backoff, delivery not guaranteed.
-- A real Test environment at `api.kriya.dev` with Test-only `/scenario/` simulators.
-- `TransitionOrderStatus` → `ReadyToAdvance` advances real funds and is irreversible.
+Event-driven and webhook contracts.
 
-## Not published
+- [Kriya Payments Webhooks](https://apis.io/asyncapis/kriya/kriya-payments-webhooks/)
 
-No `/.well-known/` documents, status page, changelog, deprecation or versioning
-policy, SLA, AsyncAPI document, MCP server, CLI, GitHub organisation, or any
-first-party SDK in npm/PyPI. Packages named "kriya" in the public registries belong
-to unrelated projects.
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [kriya](https://apis.io/servers/kriya/kriya/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [Kriya Onboarding Buyers API](https://apis.io/collections/kriya/open-kriya-buyers-api/)
+- [Kriya Onboarding Buyers Onboarding API API](https://apis.io/collections/kriya/open-kriya-onboarding-api-api/)
+- [Kriya Onboarding Buyers OnboardingJourney API](https://apis.io/collections/kriya/open-kriya-onboardingjourney-api/)
+- [Kriya Onboarding Buyers Orders API](https://apis.io/collections/kriya/open-kriya-orders-api/)
+- [Kriya Onboarding Buyers Payments API](https://apis.io/collections/kriya/open-kriya-payments-api/)
+- [Kriya Onboarding Buyers Scenario API](https://apis.io/collections/kriya/open-kriya-scenario-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Kriya Onboarding Overlay](https://apis.io/overlays/kriya/kriya-onboarding-overlay/)
+- [Kriya Payments Overlay](https://apis.io/overlays/kriya/kriya-payments-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kriya Authentication](https://apis.io/security/kriya/kriya-authentication/)
+- [Kriya Domain Security](https://apis.io/security/kriya/kriya-domain-security/)
+- [Kriya Vulnerability Disclosure](https://apis.io/security/kriya/kriya-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.kriya.co)
+- [Documentation](https://docs.kriya.co/payments)
+- [Getting started](https://docs.kriya.co/payments#section/Integration-Scenarios)
+- [API reference](https://docs.kriya.co/payments#section/API-Endpoints)
+- [Support](https://www.kriya.co/contact-us)
+- [Blog](https://www.kriya.co/blog)
+- [Security](https://www.kriya.co/responsible-disclosure)
+- [Terms of service](https://www.kriya.co/terms-and-conditions)
+- [Privacy policy](https://www.kriya.co/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 37.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 27.6 |
+
+**Agent readiness 26.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 27.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kriya/](https://apis.io/providers/kriya/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kriya: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kriya/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
